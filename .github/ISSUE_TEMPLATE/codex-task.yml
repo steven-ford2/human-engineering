@@ -1,0 +1,24 @@
+name: Codex task
+description: A concise implementation or research task usable from a phone
+title: "[Task] "
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired result
+      description: What should be different when the task is done?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and relevant paths
+      description: Course, domain, screen, source, issue or prior PR; optional if obvious.
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Specific behavior, quality or evidence requirements.
+  - type: markdown
+    attributes:
+      value: "Open this issue in a Codex task using this repository's published environment. An issue alone does not trigger Codex."

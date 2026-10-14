@@ -2,6 +2,8 @@
 
 Human Engineering is a public, source-conscious workspace for moving from observed work to defensible human-system requirements and measurement plans. It brings together the complete task-analysis curriculum and workbench previously maintained in `fighterjets2` with the complete PVI usability and workload measurement catalog.
 
+[Codex workflow](CODEX.md) · [Repository map](docs/codex/REPO_MAP.md) · [Migration provenance](MIGRATION.md)
+
 ## Interactive interface
 
 The static HTML application provides four connected modes:
@@ -26,18 +28,13 @@ Open `http://127.0.0.1:8000/`.
 ## Verify
 
 ```bash
-python -m unittest discover -s platform/tests -v
-node --check platform/app/app.js
-node --check platform/app/measures.js
-node --check platform/app/workbench.js
-node --test platform/tests/test_measurement.mjs platform/tests/test_workbench.mjs platform/tests/test_workbench_quality.mjs
-python platform/build.py --profile pages
-python tools/check_links.py
+python tools/codex/check.py full
 ```
+
+The full profile runs the Python build tests, JavaScript syntax and behavior suites, the curated Pages build, and the repository link audit.
 
 ## Research boundaries
 
 The repository contains public research, original synthesis, reusable templates, and synthetic examples. Candidate measures are not automatically valid for a new task, population, simulator, display, or operational context. A high questionnaire score, a physiological difference, or a successful structural trace does not by itself establish safety, certification, operational validity, or causal efficacy. Verify original instrument manuals and current standards before professional use.
 
 See [MIGRATION.md](MIGRATION.md) for file-level provenance and [WORKBENCH.md](WORKBENCH.md) for operation and data safeguards.
-
