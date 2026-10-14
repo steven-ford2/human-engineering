@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "name": "Human Engineering",
+  "purpose": "Public-source human engineering research scaffold; no pre-existing application or corpus",
+  "checks": {}
+}

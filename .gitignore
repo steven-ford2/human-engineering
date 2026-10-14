@@ -1,0 +1,6 @@
+**/__pycache__/
+*.pyc
+platform/dist/
+context/search.sqlite
+.venv/
+.codex-build/
