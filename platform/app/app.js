@@ -19,7 +19,7 @@ const kindLabel={overview:'Overview','micro-study':'Micro-study','lesson':'Full 
 function toast(s){const t=$('#toast');t.textContent=s;t.hidden=false;clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.hidden=true,3200)}
 function navTo(hash){if(location.hash===hash)render();else location.hash=hash;}
 function onChange(){++epoch;render();$('#sidebar').classList.remove('open');$('#menuToggle').setAttribute('aria-expanded','false')}
-function currentPath(){return rawHash().split('/').slice(1)}
+function currentPath(){return rawHash().split('?')[0].split('/').slice(1)}
 function setTheme(v){state.theme=v;document.documentElement.dataset.theme=v;save();}
 function heading(text,desc='',label='LEARNING LIBRARY'){return `<div class="page-heading"><div class="overline">${esc(label)}</div><h1>${esc(text)}</h1>${desc?`<p>${esc(desc)}</p>`:''}</div>`}
 function courseNav(){let html='<div class="course-heading">Research domains</div>';const current=currentPath();for(const c of manifest.courses){html+=`<button data-route="#/course/${encodeURIComponent(c.id)}" class="course-item ${current[0]==='course'&&current[1]===c.id?'active':''}"><span class="course-number">${esc(c.number)}</span><span class="course-name">${esc(c.title)}</span></button>`}$('#courseNavigation').innerHTML=html;}
@@ -34,7 +34,7 @@ const recent=state.recent.map(id=>docMap.get(id)).filter(Boolean).slice(0,3);
 const recentCards=recent.length?recent.map(d=>docCard(d)).join(''):manifest.courses.map(courseCard).join('');
 const workspaces=[
 ['MODEL','Task-analysis workbench','Build the explicit chain from scenarios and tasks through decisions, needs, requirements, tests, and evidence.','#/workbench','Open workbench →'],
-['MEASURE','Measurement Atlas','Filter 212 candidate measures, inspect operational definitions and limitations, and compare study-design patterns.','#/measures','Explore measures →'],
+['MEASURE','Measurement Atlas','Filter 279 candidate measures, inspect evidence-rich profiles, compare study uses, and browse psychometrics and standards mappings.','#/measures','Explore measures →'],
 ['LEARN','Methods and curriculum','Use field guides, synthetic cases, templates, assessment material, and the complete 16-week course.','#/academy','Browse methods →'],
 ['CONNECT','Knowledge map','Move across core human-engineering concepts and follow each association back to source documents.','#/wiki','Explore concepts →'],
 ['PRACTICE','Study lab','Use source-authored recall prompts and local review history without fabricated answer keys.','#/study','Start a study session →']

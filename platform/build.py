@@ -205,7 +205,7 @@ def build(root:Path,out:Path,profile:str='local'):
     if measurement_source.is_dir():
         measurement_out = out/'measurement-data'
         measurement_out.mkdir(parents=True,exist_ok=True)
-        for name in ('measures.json','study-designs.json'):
+        for name in ('measures.json','study-designs.json','measurement-evidence.json'):
             if (measurement_source/name).is_file():
                 shutil.copy2(measurement_source/name,measurement_out/name)
     shutil.copytree(Path(__file__).parent/'app',out,dirs_exist_ok=True)
