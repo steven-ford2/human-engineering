@@ -45,6 +45,7 @@
  .workspace-card{min-height:0}
  .workflow-ribbon{grid-template-columns:1fr;padding:15px}.workflow-ribbon i{display:none}.workflow-ribbon div{border-bottom:1px solid var(--line);padding:7px 0}.workflow-ribbon div:last-child{border-bottom:0}
  .topbar{height:60px}
+ .search-launch{width:34px}
  .sidebar{top:60px;height:calc(100vh - 60px)}
  .app-shell,.app-shell.has-context{min-height:calc(100vh - 60px)}
 }

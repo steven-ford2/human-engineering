@@ -1,6 +1,6 @@
 # Human Engineering HTML workspace
 
-The interface is a static, buildless browser application generated from the two domains registered in `workspace.json`. It combines a source reader, knowledge index, local study state, the task-analysis workbench, and the measurement explorer.
+The interface is a static, buildless browser application generated from the two domains registered in `workspace.json`. It combines a source reader, knowledge index, local study state, the task-analysis workbench, and an evidence-aware measurement explorer with a guided demo, psychometrics field guide, standards crosswalk, and detailed measure profiles.
 
 ## Build and serve
 

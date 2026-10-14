@@ -3,17 +3,37 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {dirname, resolve} from 'node:path';
-import {filterMeasures, validateCatalog} from '../app/measures.js';
+import {filterMeasures, validateCatalog, validateEvidence} from '../app/measures.js';
 const here=dirname(fileURLToPath(import.meta.url));
 const root=resolve(here,'../..');
 const c=JSON.parse(readFileSync(resolve(root,'domains/pvi-measurement/catalog/measures.json'),'utf8'));
+const evidence=JSON.parse(readFileSync(resolve(root,'domains/pvi-measurement/catalog/measurement-evidence.json'),'utf8'));
 const designs=JSON.parse(readFileSync(resolve(root,'domains/pvi-measurement/catalog/study-designs.json'),'utf8'));
 test('catalog has unique measures and all construct/source relationships resolve',()=>{
   assert.equal(validateCatalog(c).length,0);
-  assert.ok(c.measures.length>=180);
-  assert.ok(c.constructs.length>=25);
-  assert.ok(c.sources.length>=15);
+  assert.ok(c.measures.length>=275);
+  assert.ok(c.constructs.length>=34);
+  assert.ok(c.sources.length>=30);
   assert.equal(new Set(c.measures.map(m=>m.id)).size,c.measures.length);
+});
+test('study, profile and standards evidence resolves to catalog records',()=>{
+  assert.equal(validateEvidence(c,evidence).length,0);
+  assert.ok(evidence.studies.length>=30);
+  assert.ok(evidence.standards.length>=9);
+  assert.ok(evidence.standardMappings.length>=15);
+  assert.ok(evidence.psychometricConcepts.length>=20);
+  assert.ok(Object.keys(evidence.measureProfiles).length>=14);
+  const mapped=new Set(evidence.standardMappings.flatMap(x=>x.measureIds));
+  assert.ok(mapped.has('display-luminance-adjustment-ratio'));
+  assert.ok(mapped.has('nasa-task-load-index-weighted'));
+  assert.ok(mapped.has('anthropometric-accommodation-rate'));
+});
+test('aviation expansion covers display, vision, ergonomics and handling',()=>{
+  assert.ok(filterMeasures(c.measures,{family:'display'}).length>=34);
+  assert.ok(filterMeasures(c.measures,{family:'ergonomic'}).length>=12);
+  assert.ok(filterMeasures(c.measures,{construct:'visual-performance'}).length>=25);
+  assert.ok(filterMeasures(c.measures,{construct:'anthropometric-accommodation'}).length>=5);
+  assert.ok(filterMeasures(c.measures,{q:'NVIS'}).length>=3);
 });
 test('all measures have operational unit, evidence and reliability caveat',()=>{
   for(const m of c.measures){
