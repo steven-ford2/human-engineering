@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {dirname, resolve} from 'node:path';
-import {filterMeasures, validateCatalog, validateEvidence} from '../app/measures.js';
+import {enrich, filterMeasures, validateCatalog, validateEvidence} from '../app/measures.js';
 const here=dirname(fileURLToPath(import.meta.url));
 const root=resolve(here,'../..');
 const c=JSON.parse(readFileSync(resolve(root,'domains/pvi-measurement/catalog/measures.json'),'utf8'));
@@ -23,10 +23,29 @@ test('study, profile and standards evidence resolves to catalog records',()=>{
   assert.ok(evidence.standardMappings.length>=15);
   assert.ok(evidence.psychometricConcepts.length>=20);
   assert.ok(Object.keys(evidence.measureProfiles).length>=14);
+  assert.equal(evidence.verificationPathways.length,4);
   const mapped=new Set(evidence.standardMappings.flatMap(x=>x.measureIds));
   assert.ok(mapped.has('display-luminance-adjustment-ratio'));
   assert.ok(mapped.has('nasa-task-load-index-weighted'));
   assert.ok(mapped.has('anthropometric-accommodation-rate'));
+});
+test('verification pathways resolve complete, complementary evidence stacks',()=>{
+  const expected=new Set(['display-alert-legibility','hud-hmd-integration','workload-mode-handling','pilot-accommodation']);
+  assert.deepEqual(new Set(evidence.verificationPathways.map(x=>x.id)),expected);
+  for(const p of evidence.verificationPathways){
+    assert.ok(p.evidenceGroups.length>=3,p.id);
+    assert.ok(p.standardMappingIds.length>=4,p.id);
+    assert.ok(p.conditions.length>=6,p.id);
+    assert.ok(p.artifacts.length>=6,p.id);
+    assert.ok(p.boundaries.length>=4,p.id);
+  }
+});
+test('finder evidence-status facets expose both curated records and research queue',()=>{
+  const enriched=enrich(structuredClone(c),evidence);
+  assert.equal(filterMeasures(enriched.measures,{evidence:'profile'}).length,Object.keys(evidence.measureProfiles).length);
+  assert.ok(filterMeasures(enriched.measures,{evidence:'studied'}).length>=30);
+  assert.ok(filterMeasures(enriched.measures,{evidence:'mapped'}).length>=100);
+  assert.ok(filterMeasures(enriched.measures,{evidence:'needs-appraisal'}).length>=150);
 });
 test('aviation expansion covers display, vision, ergonomics and handling',()=>{
   assert.ok(filterMeasures(c.measures,{family:'display'}).length>=34);

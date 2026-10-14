@@ -36,7 +36,7 @@ jobs:
           evidence=json.loads((out/'measurement-data/measurement-evidence.json').read_text(encoding='utf-8'))
           assert manifest['profile']=='pages'
           assert {c['source'] for c in manifest['courses']}=={'domains/task-analysis','domains/pvi-measurement'}
-          assert len(manifest['docs'])==69
+          assert len(manifest['docs'])==70
           assert len(catalog['measures'])==279
           assert len(catalog['constructs'])==34
           assert len(designs['designs'])==25
@@ -44,6 +44,7 @@ jobs:
           assert len(evidence['standards'])==9
           assert len(evidence['standardMappings'])==17
           assert len(evidence['psychometricConcepts'])==21
+          assert len(evidence['verificationPathways'])==4
           assert not manifest['warnings']
           print('Validated',len(manifest['docs']),'documents,',len(catalog['measures']),'measures, and',len(evidence['studies']),'study records')
           PY

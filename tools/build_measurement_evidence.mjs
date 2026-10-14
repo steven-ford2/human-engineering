@@ -177,7 +177,11 @@ const applications = [
 ];
 
 const allExisting = new Set(catalog.measures.map(x => x.id));
-const mids = (...ids) => ids.filter(id => allExisting.has(id));
+const mids = (...ids) => {
+  const missing = ids.filter(id => !allExisting.has(id));
+  if (missing.length) throw new Error(`Unknown measure IDs in evidence generator: ${missing.join(', ')}`);
+  return ids;
+};
 
 const standardMappings = [
   {id:'1472-workload-performance',standardId:'mil-std-1472h',locator:'§§4.2.3–4.2.4; public PDF p. 22',relationship:'direct-criterion-if-invoked',verificationUse:'Build a converging workload/performance package covering accuracy, time, cognitive processing, communication, errors, and mission/task performance.',caveat:'A questionnaire alone does not demonstrate acceptable workload. Confirm invocation, tailoring, user population, task, and acceptance criteria.',applications:['pilot-workload','mission','simulator'],measureIds:mids('nasa-task-load-index-weighted','raw-nasa-tlx','bedford-workload-rating','subjective-workload-assessment-technique-swat','instantaneous-self-assessment-isa','task-success-proportion','task-completion-time','decision-accuracy','critical-task-omission-count','flight-path-tracking-rmse','heart-rate-variability-rmssd','area-of-interest-dwell-time')},
@@ -256,6 +260,117 @@ const measureProfiles = {
   'instantaneous-self-assessment-isa':{summary:'Brief repeated rating intended to track momentary workload during a real-time task.',administration:'Use the defined five-level scale/anchors and prompt schedule; synchronize prompts/responses to task events and record response modality, missed prompts, and local performance around each prompt.',licensing:'Use the EUROCONTROL ERGO documentation and exact chosen implementation.',reliabilityEvidence:[{label:'Repeated-measures precision',result:'Model ratings as repeated within-person observations, estimate condition/time sensitivity, and report missing prompts. Do not treat prompts as independent participants.',source:'EUROCONTROL ERGO; psychometric review'}],validityEvidence:[{label:'Relations and sensitivity',result:'ISA was sensitive to task difficulty and correlated with several post-task, heart-rate, and performance comparators in an experimental evaluation.',source:'Tattersall & Foord (1996)'},{label:'Prompt reactivity',result:'Primary tracking performance worsened when a manual or spoken ISA response was required.',source:'Tattersall & Foord (1996)',kind:'limitation'},{label:'Temporal distinction',result:'EUROCONTROL studies kept repeated ISA separate from post-exercise NASA-TLX, supporting different temporal interpretations.',source:'AMRUFRA validation'}],factorEvidence:[{model:'Single repeated ordinal item',source:'EUROCONTROL ERGO',sample:'Real-time simulation applications',estimator:'Not a multi-item factor model',result:'One momentary ordinal workload response per prompt.',interpretation:'Factor analysis and alpha are not applicable. Evaluate reactivity, ordinal repeatability, sensitivity, timing, and missingness.'}],researchNeeds:['Probe-reactivity estimate','Prompt interval justification','Ordinal repeated-measures model','Synchronization with performance/physiology']}
 };
 
+const verificationPathways = [
+  {
+    id:'display-alert-legibility',
+    label:'Display / alerting',
+    title:'Flight-deck display legibility and visual alerting',
+    question:'Can the intended pilot detect, identify, understand, and correctly act on a configured visual alert while preserving the primary flight task?',
+    summary:'A layered verification case joining calibrated display measurements with representative-user alert performance under daylight, night, NVIS, optical-gear, concurrency, and cascading-failure conditions.',
+    claim:'The configured presentation is physically viewable and supports correct detect–identify–act performance within program-approved operational constraints.',
+    scenario:'A pilot maintaining a primary flight task receives a warning, caution, or advisory alone or during a cascading failure under a specified daylight, night, or NVIS condition.',
+    task:'Detect the alert, discriminate priority, identify the condition, select the correct response, and preserve higher-priority aircraft control.',
+    failureMechanisms:['Missed or late alert detection','Priority or meaning confusion','Wrong or delayed corrective action','Attentional capture that degrades the primary flight task'],
+    standardMappingIds:['1472-display-photometry','516d-readability','516d-alerts','3009-nvis','faa-v3-evaluation'],
+    evidenceGroups:[
+      {role:'Primary task acceptance',purpose:'Score detection, correct interpretation, and action against independent injected-state truth and an approved response rubric.',measureIds:mids('alert-detection-probability','alert-meaning-comprehension','alert-prioritization-accuracy','alert-correct-action-success','alert-corrective-action-latency')},
+      {role:'Engineering characterization',purpose:'Test the applicable physical criteria with calibrated equipment, documented geometry, ambient condition, and uncertainty.',measureIds:mids('display-luminance-adjustment-ratio','display-minimum-luminance-capability','electronic-display-contrast-ratio','specular-reflection-fraction','diffuse-reflection-fraction','character-angular-height','nvis-radiance')},
+      {role:'Corroborating objective evidence',purpose:'Expose tradeoffs so faster alert response cannot hide degraded aircraft control or critical omissions.',measureIds:mids('flight-path-tracking-rmse','critical-task-omission-count','head-down-visual-time')},
+      {role:'Diagnostic support',purpose:'Characterize perceived workload and visual search without substituting either for correct task performance.',measureIds:mids('bedford-workload-rating','nasa-task-load-index-weighted','area-of-interest-dwell-time')}
+    ],
+    conditions:['Full-sun/daylight context and installed lighting extremes where applicable','Night/dark and applicable NVIS configuration','Design eye plus required viewing-envelope positions','Operational helmets and clear/tinted visors or other optical gear','Nominal, competing, and representative cascading alerts','Primary-task concurrency and production-representative software/symbology'],
+    artifacts:['Applicable requirement and tailoring/certification-basis extract','Test card, event truth, response rubric, and critical-failure rules','Display, lighting, eye-point, visor, and software configuration record','Instrument calibration, geometry diagram, raw photometry, and uncertainty','Time-synchronized event, flight/control, observer, and response data','Participant/gear coverage, deviations, discrepancies, and authority disposition'],
+    decisionRules:['Keep physical-criterion and human-task findings separate.','Predeclare critical misses and wrong actions; do not average them away.','Use task- or hazard-derived timing limits approved by the program.','Treat workload, gaze, confidence, and preference as diagnostic evidence.'],
+    boundaries:['System safety or certification from photometry alone','Alert comprehension from visibility alone','Compliance with MIL-HDBK-516D, which is guidance','Transfer of a workload score into an objective performance finding'],
+    sources:[
+      {label:'MIL-STD-1472H official record',url:'https://quicksearch.dla.mil/qsdocdetails.aspx?ident_number=36903',locator:'§§5.2.1.2–5.2.2.7; public PDF pp. 107, 109'},
+      {label:'MIL-HDBK-516D official record',url:'https://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=212162',locator:'§9.2.1.1 and §9.2.8.4; public PDF pp. 517–518, 529–530'},
+      {label:'FAA flight-deck human-factors report',url:'https://rosap.ntl.bts.gov/view/dot/87936',locator:'Version 3.0, Appendix B and Appendix C.1/C.6'}
+    ]
+  },
+  {
+    id:'hud-hmd-integration',
+    label:'HUD / HMD',
+    title:'HUD/HMD optical, tracking, and operational integration',
+    question:'Does the configured optical path, imagery, tracker, helmet integration, and timing support the specified outside-view task across the approved user and operating envelope?',
+    summary:'A progressive bench-to-HITL pathway that keeps optical/engineering conformance, task performance, human integration, and symptom evidence in their correct roles.',
+    claim:'The configured HUD/HMD supports the specified outside-view and aircraft-control tasks across approved eye/head pose, gear, light, maneuver, and display states.',
+    scenario:'During taxi, takeoff, maneuvering, approach, or landing, the pilot acquires and interprets referenced information while preserving outside-world visibility, flight-path control, and hazard detection.',
+    task:'Acquire, align, interpret, and act on displayed and outside-world information through head movement, lighting changes, and representative aircraft dynamics.',
+    failureMechanisms:['Occlusion or loss of task-critical field','Misregistration, parallax, boresight error, or drift','Lag, jitter, or double imagery during motion','Restricted head movement, unstable fit, discomfort, or disorientation'],
+    standardMappingIds:['1472-hud','1472-hmd','1472-simulator','516d-human-performance','87213-display-methods','faa-v3-evaluation'],
+    evidenceGroups:[
+      {role:'Primary task acceptance',purpose:'Evaluate correct symbol interpretation, target/hazard response, task completion, and aircraft-control outcomes against task-specific truth and tolerances.',measureIds:mids('hazard-detect-identify-avoid-success','small-symbol-identification-accuracy','flight-path-tracking-rmse','task-success-proportion')},
+      {role:'Optical and temporal characterization',purpose:'Map performance across the required field, eye/head pose, display mode, lighting, and installed alignment state.',measureIds:mids('hud-eyebox-accommodation','hud-parallax-error','hud-boresight-error','hud-combiner-distortion','hmd-field-of-view-coverage','hmd-field-of-regard-coverage','hmd-motion-to-photon-latency','hmd-visual-jitter-amplitude')},
+      {role:'Helmet and human integration',purpose:'Test fit, alignment, stability, visibility, mobility, and physical loading for the specified population, gear, and duration.',measureIds:mids('hmd-exit-pupil-accommodation','hmd-head-mobility-range','hmd-mass-center-of-gravity','hmd-neck-load-exposure','task-critical-field-of-view-visibility')},
+      {role:'Diagnostic and safety monitoring',purpose:'Characterize symptoms, burden, and perceived workload without using them as substitutes for optical or task criteria.',measureIds:mids('simulator-sickness-questionnaire-ssq','perceived-hmd-comfort','body-part-discomfort-rating','nasa-task-load-index-weighted')}
+    ],
+    conditions:['Required day, night, NVD/NVIS, and transition lighting states','Eye box, exit pupil, eye relief, field angle, and representative head poses','Helmet/HMD size, visor, eyewear, mask, and other operational gear','Static and dynamic alignment, thermal/mechanical state, vibration, and maneuver','Normal, degraded, declutter, tracker-loss, and recovery states','Progression from calibrated bench and HITL to ground/flight only when authorized'],
+    artifacts:['Applicable criteria, task-region analysis, and approved operational claim','Optical-bench configuration, calibration, reference geometry, and uncertainty','Field/eye/head-pose maps for FOV, registration, latency, jitter, and occlusion','Helmet/gear fit, mass/CG, mobility, and participant accommodation records','Time-synchronized task, flight/control, tracker, display, and adverse-event data','Stage-transfer argument, limitations, discrepancies, and authority disposition'],
+    decisionRules:['Give each optical or timing criterion its own visible result.','Require task-level evidence for operational use, not bench conformance alone.','Treat symptoms and comfort as risk/diagnostic evidence, not proof of task support.','State what transfers between bench, simulator, aircraft ground, and flight—and why.'],
+    boundaries:['Operational integration from optical-bench data alone','Universal latency, registration, comfort, or workload thresholds','Flight suitability from one helmet size, eye point, or lighting condition','Use of TBD MIL-HDBK-87213B HMD sections as completed test methods'],
+    sources:[
+      {label:'MIL-STD-1472H official record',url:'https://quicksearch.dla.mil/qsdocdetails.aspx?ident_number=36903',locator:'§§5.2.2.15–5.2.2.16 and §§5.12.1.4.1–5.12.1.4.4'},
+      {label:'MIL-HDBK-87213B official record',url:'https://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=123715',locator:'§§4.2.1.25–4.2.1.26; note unresolved TBD HMD verification text'},
+      {label:'MIL-HDBK-516D official record',url:'https://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=212162',locator:'§6.1.3 and §9.4.4.1'}
+    ]
+  },
+  {
+    id:'workload-mode-handling',
+    label:'Workload / handling',
+    title:'Mode management, workload, and handling qualities',
+    question:'Can a qualified pilot correctly manage and recover the system state while maintaining approved flight-task performance and an authority-accepted workload/handling-qualities basis?',
+    summary:'A synthetic mode-transition pathway that prevents subjective workload or a handling rating from hiding state confusion, unsafe commands, failed recovery, or loss of aircraft control.',
+    claim:'The pilot can distinguish, command, verify, and recover the specified mode states while maintaining approved flight/control performance in nominal, concurrent, degraded, and failure conditions.',
+    scenario:'A requested mode transition is activated, deferred, rejected, or degraded while the pilot maintains a primary flight task and a representative communication or monitoring task.',
+    task:'Assess the current and requested state, command if needed, verify achieved state, recover from unexpected behavior, and preserve aircraft control.',
+    failureMechanisms:['Selected/active/achieved state confusion','Inappropriate retry or unsafe command','Delayed or failed recovery','Fixation, flight-path excursion, or loss of performance reserve'],
+    standardMappingIds:['1472-workload-performance','1472-simulator','516d-human-performance','46855-analysis-test','1797-metadata-only'],
+    evidenceGroups:[
+      {role:'Primary task acceptance',purpose:'Score mode-state understanding, command/recovery correctness, critical errors, and primary flight performance against independent system truth.',measureIds:mids('mode-identification-accuracy','mode-error-rate','error-recovery-latency','critical-task-omission-count','flight-path-tracking-rmse')},
+      {role:'Corroborating objective evidence',purpose:'Reveal control effort, reversals, communication cost, and response timing that explain performance reserve and failure mechanisms.',measureIds:mids('first-correct-action-latency','stick-input-rms','stick-reversal-rate','readback-correctness','communication-acknowledgment-delay')},
+      {role:'Diagnostic workload and situation awareness',purpose:'Describe subjective demand, spare capacity, and perceived state awareness with the exact version, timing, and scoring preserved.',measureIds:mids('bedford-workload-rating','nasa-task-load-index-weighted','raw-nasa-tlx','situation-awareness-rating-technique-sart')},
+      {role:'Handling-qualities evidence',purpose:'Use the original decision-tree construct only after desired and adequate performance are defined for the exact task and configuration.',measureIds:mids('cooper-harper-handling-qualities-rating','handling-qualities-task-performance-margin','pilot-induced-oscillation-rating')}
+    ],
+    conditions:['Activated, deferred, rejected/inhibited, and failed transition outcomes','Nominal, high-concurrency, degraded, and recovery scenarios','Representative primary flight plus communication/monitoring demand','Qualified pilot population, familiarization, and stable proficiency','Applicable flight phases, loadings, configurations, and environments','High-fidelity simulator with independent selected/accepted/active/achieved state logs'],
+    artifacts:['Functional/task analysis, state model, hazard link, and operational claim','Desired/adequate performance definitions and acceptance authority','Simulator model/fidelity statement, crew qualification, and familiarization record','Scenario scripts and independent state, event, aircraft, and control logs','Observer/error adjudication plus exact rating-scale instructions and timing','Tradeoff analysis, uncertainty, deviations, discrepancies, and authority disposition'],
+    decisionRules:['Keep every critical error and loss-of-control event visible.','Do not interpret “no significant difference” as equivalence.','Define the exact role of workload and handling ratings before data collection.','Preserve ordinal decision paths, achieved performance, and pilot comments.'],
+    boundaries:['Adequate performance, safety, or airworthiness from TLX/Bedford alone','General usability or workload from Cooper–Harper','A public clause mapping to controlled MIL-STD-1797B text','Automatic transfer from simulator to flight'],
+    sources:[
+      {label:'MIL-HDBK-516D official record',url:'https://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=212162',locator:'§6.1.3 and §9.4.1; public PDF pp. 89, 548'},
+      {label:'MIL-STD-46855A official record',url:'https://quicksearch.dla.mil/qsdocdetails.aspx?ident_number=113938',locator:'§§5.1.2–5.1.2.3 and §§5.3–5.3.3'},
+      {label:'Original Cooper–Harper report',url:'https://ntrs.nasa.gov/citations/19690013177',locator:'NASA TN D-5153 (1969)'}
+    ]
+  },
+  {
+    id:'pilot-accommodation',
+    label:'Pilot ergonomics',
+    title:'Pilot accommodation, reach, visibility, and ergonomics',
+    question:'Can the approved target pilot population, clothed, equipped, and restrained as required, see, reach, fully actuate, and safely use the applicable controls and displays?',
+    summary:'A multivariate accommodation pathway that joins population-boundary analysis, installed geometry, control force/travel, visibility, and representative task demonstration.',
+    claim:'The specified multivariate pilot population can safely complete the required normal, emergency, and recovery tasks across applicable station settings and operational equipment.',
+    scenario:'Multivariate accommodation-envelope boundary cases perform normal control/display tasks and an emergency or recovery sequence at applicable seat/restraint positions with operational gear.',
+    task:'View, identify, reach, grasp, fully actuate, verify, release/recover, and egress where applicable without obstruction, excessive force, or unsafe posture.',
+    failureMechanisms:['Obstructed control, display, or outside-world view','Excessive reach, force, posture, or contact loading','Restricted motion, incomplete control travel, or inadvertent actuation','Helmet/equipment interference or inability to execute an emergency action'],
+    standardMappingIds:['1472-anthropometry','1472-hmd','516d-field-of-view-controls','46855-analysis-test'],
+    evidenceGroups:[
+      {role:'Primary task acceptance',purpose:'Demonstrate complete, correct, and safe operation of every required task/control across approved boundary cases and station settings.',measureIds:mids('input-reach-operability-completion','task-success-proportion','task-critical-field-of-view-visibility','control-actuation-force-margin')},
+      {role:'Accommodation characterization',purpose:'Quantify joint population coverage, reach, clearance, and control access using the approved anthropometric database and multivariate method.',measureIds:mids('anthropometric-accommodation-rate','control-reach-accommodation','control-clearance-accommodation','helmet-clearance-margin')},
+      {role:'Equipment and mobility evidence',purpose:'Expose fit, head/limb movement, equipment mass/CG, visibility, and installed interference in the actual task and gear configuration.',measureIds:mids('hmd-head-mobility-range','hmd-mass-center-of-gravity','hmd-neck-load-exposure','hmd-symbol-occlusion-rate')},
+      {role:'Diagnostic and safety monitoring',purpose:'Record exertion, discomfort, and symptoms as supporting burden evidence with predefined stop criteria.',measureIds:mids('borg-cr10-perceived-exertion','body-part-discomfort-rating','perceived-hmd-comfort')}
+    ],
+    conditions:['Approved male/female multivariate boundary cases, not independent percentile mannequins','Operational clothing, helmet/HMD, visor, mask, gloves, footwear, and protective/survival gear','Extreme and intermediate seat positions plus operational restraint states','Normal, degraded, emergency, recovery, and applicable egress tasks','Full control travel, required force, repeated/continuous action, and both hands where required','Production-representative geometry with adjacent equipment, cables, and installed obstructions'],
+    artifacts:['Target-population definition, database/version, dimensions, and multivariate method','Boundary-case derivation and digital-model assumptions/validation','Participant body measurements, gear sizes, seat/restraint settings, and configuration survey','Reach, clearance, force, travel, FOV, task, error, and safety-monitoring records','Uncovered population estimate, limitations, exceptions, and accepted omissions','Discrepancies, corrective actions, retest need, and authority disposition'],
+    decisionRules:['Use the invoked population criterion and approved target population.','Evaluate joint task success; never add marginal percentile coverages.','Confirm consequential model results with representative hardware and users.','Keep comfort/exertion separate from reach, clearance, visibility, and control authority.'],
+    boundaries:['Multivariate accommodation from a fifth-percentile female and 95th-percentile male alone','Task operability from a digital human model alone','Safe reach, visibility, or egress from comfort ratings','Universal use of the 90/95/99-percent values outside the invoked and tailored context'],
+    sources:[
+      {label:'MIL-STD-1472H official record',url:'https://quicksearch.dla.mil/qsdocdetails.aspx?ident_number=36903',locator:'§§5.8.3–5.8.4; public PDF pp. 239–240'},
+      {label:'MIL-HDBK-516D official record',url:'https://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=212162',locator:'§§9.2.1.3 and 9.2.2.1; public PDF pp. 518–520'},
+      {label:'MIL-STD-46855A official record',url:'https://quicksearch.dla.mil/qsdocdetails.aspx?ident_number=113938',locator:'§§5.3–5.3.3; representative users, conditions, discrepancies, and errors'}
+    ]
+  }
+];
+
 const concepts = [
   {id:'validity-argument',group:'Validity evidence',name:'Intended interpretation and use',question:'What claim and decision will this score support?',definition:'Validity concerns evidence and theory supporting an interpretation of scores for a specified use—not a permanent property or a single coefficient.',use:'Before selecting a measure, write the construct, population, task, score meaning, decision, and cost of error.',misuse:'Calling an instrument “validated” without naming version, population, context, interpretation, or decision.',record:'Construct; score; population; task/context; decision; consequences; required evidence.',source:'Standards for Educational and Psychological Testing (2014)',url:'https://www.testingstandards.net/open-access-files.html'},
   {id:'content-evidence',group:'Validity evidence',name:'Content evidence',question:'Do items and tasks cover the intended construct and operational domain?',definition:'Evidence from a documented domain, task analysis, expert judgment, and coverage of relevant facets and failure/degraded states.',use:'When building or adapting items, scenarios, probes, checklists, or performance rubrics.',misuse:'Treating a generic usability total as complete coverage of fighter flight-deck usability or mission safety.',record:'Domain map; task/goal analysis; expert selection; missing-domain review; item-to-construct trace.',source:'Standards for Educational and Psychological Testing (2014)',url:'https://www.testingstandards.net/open-access-files.html'},
@@ -289,10 +404,11 @@ const evidence = {
   standardMappings,
   studies,
   measureProfiles,
+  verificationPathways,
   psychometricConcepts:concepts
 };
 
 writeFileSync(catalogPath, `${JSON.stringify(catalog, null, 2)}\n`);
 writeFileSync(evidencePath, `${JSON.stringify(evidence, null, 2)}\n`);
-console.log(JSON.stringify({measures:catalog.measures.length,constructs:catalog.constructs.length,sources:catalog.sources.length,standards:standards.length,mappings:standardMappings.length,studies:studies.length,profiles:Object.keys(measureProfiles).length,concepts:concepts.length}, null, 2));
+console.log(JSON.stringify({measures:catalog.measures.length,constructs:catalog.constructs.length,sources:catalog.sources.length,standards:standards.length,mappings:standardMappings.length,studies:studies.length,profiles:Object.keys(measureProfiles).length,pathways:verificationPathways.length,concepts:concepts.length}, null, 2));
 

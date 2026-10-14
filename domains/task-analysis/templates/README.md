@@ -8,6 +8,7 @@ These are **proposed, generic and non-program-authoritative** templates. They ar
 4. `information-needs.csv` — decision-linked information requirements and required–available gaps.
 5. `control-needs.csv` — intent, authority, signal/state/feedback/exception analysis.
 6. `requirements-tests.csv` — trace requirements into objective, observable tests.
+7. `verification-cases.csv` — freeze one reviewable verification argument from authority and configuration through conditions, measure roles, artifacts, findings, discrepancies and disposition. This companion register is not currently imported by the browser workbench.
 
 ## Link semantics
 IDs: SC-, F-, T-, D-, IN-, CN-, R-, TEST-, EV- followed by stable number or UUID. Store multi-link values as `;`-delimited IDs only as a **transitional CSV convenience**; real database links should be normalized into join tables. **Do not automatically treat human-readable prose as source evidence.**
@@ -22,3 +23,5 @@ IDs: SC-, F-, T-, D-, IN-, CN-, R-, TEST-, EV- followed by stable number or UUID
 
 ## Import/use
 Begin with one scenario, 3–5 tasks, 2–3 decisions, then connect information/control needs. Add objective measures only once the required operational outcomes are clear. The blank CSVs are not evidence that every named field is appropriate for every task.
+
+For a verification case, assign each measure one explicit role: `primary_acceptance`, `corroborating_objective`, `engineering_characterization`, `diagnostic_psychometric`, `exploratory_mechanism`, or `safety_monitoring`. Record the acceptance-basis type and approving authority separately. The worked aviation pathways and source boundaries are in [Scenario-to-verification flagship pathways](../../../docs/research/scenario-to-verification-flagship-pathways.md).

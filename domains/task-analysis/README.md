@@ -19,6 +19,8 @@ Develop a repeatable, evidence-based approach to mission/task analysis, expert c
 9. [Measurement/validation crosswalk](./practice/measurement-framework.md), [quality rubric](./practice/quality-rubric.md), and [ready-to-use CSV templates](./templates/README.md)
 10. [16-week mastery curriculum](./training/mastery-plan.md), [week-1 first lesson](./training/week01-lesson01.md), and [weekly practicum](./training/practice-log.md).
 
+To carry the chain through a reviewable verification decision, use the interactive **Verification studio** (`#/measures/verification` in the built site), the [verification-case research pattern](../../docs/research/scenario-to-verification-flagship-pathways.md), and the blank [verification-case register](./templates/verification-cases.csv).
+
 ## Existing assets: do not duplicate
 - [Processed Guyton/Kuhlken/Lowe (2025) MBHSE paper](https://github.com/steven-ford2/FighterJets/blob/main/references/task-analyses-mbse.md) — existing repository copy.
 - [Task-Centered User Interface Design](https://github.com/steven-ford2/FighterJets/blob/main/references/tcuid.md).

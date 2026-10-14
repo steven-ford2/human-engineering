@@ -2,11 +2,11 @@
 
 A construct-first library of **279 quantitative candidate measures across 34 constructs** for usability, workload, situation awareness, flight-deck displays, HUD/HMD and vision science, pilot control behavior, physical ergonomics, and simulator/online experimental evaluation.
 
-**Interactive browser:** Launch the local Atlas and open **Measures** (`#/measures`). Start with the **Coworker guide**, use aviation and standards presets, then open any measure profile to inspect operationalization, source-bounded reliability/validity evidence, factor/item evidence, appraised study uses, and candidate verification mappings.
+**Interactive browser:** Launch the local Atlas and open **Measures** (`#/measures`). Start with the **Coworker guide**, use aviation, evidence-status, and standards filters, then open any measure profile to inspect operationalization, source-bounded reliability/validity evidence, factor/item evidence, appraised study uses, and candidate verification mappings. Use the **Verification studio** (`#/measures/verification`) when the starting point is an operational claim rather than a measure name.
 
 ## Contents
 - [Machine-readable catalog](catalog/measures.json) — 279 versioned records with modality, timing, definition, operationalization, reliability appraisal, limitations, pilot-task context, analysis and research pointers.
-- [Evidence library](catalog/measurement-evidence.json) — standards, clause-level mappings, appraised studies, deep measure profiles, and psychometric concepts used by the interactive interface.
+- [Evidence library](catalog/measurement-evidence.json) — standards, clause-level mappings, appraised studies, deep measure profiles, four task-to-evidence verification pathways, and psychometric concepts used by the interactive interface.
 - [Source index](catalog/sources.md) — selected primary/official source identities and links. A source cross-reference is *not* proof that every candidate measurement was validated by that source.
 - [Small-N online study designs](guides/online-studies.md) — vignette comparison, paired designs, MaxDiff, best–worst, discrete-choice, monadic and preference/comprehension experiments.
 - [Measurement and reliability](guides/reliability-validity.md) — psychometrics, repeatability, generalizability, telemetry fidelity and analysis practices.
@@ -29,3 +29,5 @@ NASA-TLX, SUS, UMUX-LITE, ASQ, PSSUQ and Cooper–Harper each have administratio
 All examples use invented public-release scenarios. No real-world aircraft performance limits, classified systems, restricted designs, pilot-program data or approval claims are supplied. FAA guidance applies to specified contexts and does not automatically establish certification compliance. The catalog intentionally does **not** prescribe ideal gaze patterns, universal stick-workload cutoffs or numeric acceptance thresholds.
 
 Research source: 32 catalog anchors plus study-specific citations in the evidence library; latest catalog editorial update: October 2026.
+
+The finder now exposes its curation boundary directly: a record without a profile or appraised study is a research-queue item, not a claim that no evidence exists. The flagship pathway research and minimum verification-case schema are in [Scenario-to-verification flagship pathways](../../docs/research/scenario-to-verification-flagship-pathways.md).

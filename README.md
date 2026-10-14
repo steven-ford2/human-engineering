@@ -6,9 +6,10 @@ Human Engineering is a public, source-conscious workspace for moving from observ
 
 ## Interactive interface
 
-The static HTML application provides four connected modes:
+The static HTML application provides connected workspaces:
 
 - **Task-analysis workbench** — author scenarios, hierarchical tasks, decisions, information needs, control needs, requirements, tests, and evidence; review traceability, structural diagnostics, coverage, and quality; exchange complete JSON projects and per-register CSV.
+- **Verification studio** — move from a bounded aviation scenario/task claim to credible failure mechanisms, complementary evidence roles, applicable criteria/guidance, test conditions, artifacts, and interpretation gates using four public-source worked pathways.
 - **Measurement Atlas** — search and filter 279 candidate measures across 34 constructs and aviation contexts; open evidence-rich profiles with reliability, validity, factor/item results, appraised study uses, and clause-level verification mappings; browse 25 study-design patterns.
 - **Psychometrics field guide** — learn validity-evidence types, reliability/precision, EFA/CFA, item loadings, invariance, DIF, IRT, responsiveness, and decision uncertainty without treating a coefficient as a permanent property of a measure.
 - **Standards explorer** — find candidate evidence grouped by current MIL-STD-1472H, MIL-HDBK-516D, MIL-STD-46855A, MIL-HDBK-87213B, MIL-STD-3009, and supplemental FAA/NASA sources, with authority and transfer boundaries kept visible.
