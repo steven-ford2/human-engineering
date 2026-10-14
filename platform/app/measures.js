@@ -5,6 +5,7 @@ let catalogPromise, designsPromise, evidencePromise;
 const DEFAULT_FILTERS={q:'',construct:'',family:'',modality:'',timing:'',standard:'',application:'',evidence:'',show:60};
 const filters={...DEFAULT_FILTERS};
 const familyLabels={survey:'Questionnaire',behavior:'Behavioral',eye:'Eye tracking',stick:'HOTAS / inceptor',touch:'Touch',voice:'Voice',flight:'Flight telemetry',probe:'Scenario probe',physio:'Physiological',display:'Display / optical',ergonomic:'Ergonomic'};
+const STUDY_SET_KEY='he.measure-study-set.v1';
 
 function load(){
   if(!catalogPromise) catalogPromise=fetch('./measurement-data/measures.json').then(r=>{if(!r.ok)throw Error('Measures unavailable ('+r.status+')');return r.json()});
@@ -139,6 +140,32 @@ function pathwayBrief(p,c,e){
  ].join('\n');
 }
 
+function readStudySet(){
+ try{return [...new Set(JSON.parse(localStorage.getItem(STUDY_SET_KEY)||'[]'))].filter(x=>typeof x==='string').slice(0,4)}catch{return []}
+}
+function writeStudySet(ids){localStorage.setItem(STUDY_SET_KEY,JSON.stringify(ids.slice(0,4)))}
+function toggleStudySet(id){
+ const ids=readStudySet(),index=ids.indexOf(id);
+ if(index>=0)ids.splice(index,1);else if(ids.length<4)ids.push(id);else return {ids,full:true};
+ writeStudySet(ids);return {ids,full:false};
+}
+function studySetBar(c){
+ const selected=readStudySet().map(id=>c.measures.find(m=>m.id===id)).filter(Boolean);
+ if(!selected.length)return '';
+ return '<section class="m-study-set" aria-label="Study set"><div><span>STUDY SET</span><strong>Compare the measures you are seriously considering</strong><div class="m-study-set-items">'+selected.map(m=>'<a href="#/measures/'+encodeURIComponent(m.id)+'">'+esc(m.name)+'</a>').join('')+'</div></div><div class="m-study-set-actions"><a class="m-action dark" href="#/measures/compare">Compare selection →</a><button id="m-study-set-clear">Clear</button></div></section>';
+}
+function compareBrief(selected){
+ return selected.map(m=>[m.name,'What it measures: '+m.definition,'Collection: '+m.operationalization,'Units: '+m.units,'Timing: '+m.timing,'Reliability plan: '+m.reliability.assessment,'Interpretation boundary: '+m.validity.limitations,'Analysis: '+m.analysis].join('\n')).join('\n\n---\n\n');
+}
+function comparePage(root,c,e){
+ const selected=readStudySet().map(id=>c.measures.find(m=>m.id===id)).filter(Boolean);
+ if(!selected.length){root.innerHTML='<div class="m-shell">'+measurementNav('finder')+'<div class="m-hero"><div class="m-overline">CANDIDATE COMPARISON</div><h1>Your study set is empty</h1><p>Open a measure profile and add a serious candidate. The study set stays in this browser and can hold up to four measures.</p><div class="m-hero-actions"><a class="m-action" href="#/measures">Find a measure →</a></div></div></div>';return;}
+ const rows=[['What it measures',m=>m.definition],['Method and timing',m=>(familyLabels[m.family]||m.family)+' · '+m.timing],['Units',m=>m.units],['How to collect it',m=>m.operationalization],['Reliability plan',m=>m.reliability.assessment],['Interpretation boundary',m=>m.validity.limitations],['Analysis',m=>m.analysis],['Aviation use',m=>(m._applications||[]).join(', ')||'Context-specific']];
+ root.innerHTML='<div class="m-shell">'+measurementNav('finder')+'<div class="m-crumb"><a href="#/measures">← Back to finder</a></div><div class="m-hero"><div class="m-overline">CANDIDATE COMPARISON</div><h1>Compare the evidence roles—not just the labels</h1><p>Use this view to decide whether candidates are alternatives or complementary measures. A short questionnaire, observed task result, engineering measurement, and safety-margin indicator may answer different parts of the same claim.</p><div class="m-hero-actions"><button class="m-action m-copy-brief" id="m-copy-comparison">Copy comparison</button><a class="m-action" href="#/measures">Add another candidate</a></div></div><div class="m-compare-wrap"><table class="m-compare"><thead><tr><th>Decision point</th>'+selected.map(m=>'<th><a href="#/measures/'+encodeURIComponent(m.id)+'">'+esc(m.name)+'</a><button data-remove-measure="'+esc(m.id)+'">Remove</button></th>').join('')+'</tr></thead><tbody>'+rows.map(([label,value])=>'<tr><th>'+esc(label)+'</th>'+selected.map(m=>'<td>'+esc(value(m))+'</td>').join('')+'</tr>').join('')+'</tbody></table></div><div class="m-boundary"><strong>Selection boundary:</strong> this comparison organizes recorded information; it does not rank measures or establish that evidence transfers to your population, task, equipment, or decision rule.</div></div>';
+ root.querySelectorAll('[data-remove-measure]').forEach(b=>b.addEventListener('click',()=>{toggleStudySet(b.dataset.removeMeasure);comparePage(root,c,e)}));
+ root.querySelector('#m-copy-comparison')?.addEventListener('click',async()=>{const b=root.querySelector('#m-copy-comparison');try{await navigator.clipboard.writeText(compareBrief(selected));b.textContent='Comparison copied';}catch{b.textContent='Copy unavailable';}});
+}
+
 function verificationPage(root,c,e,id){
  const pathways=e.verificationPathways||[];
  if(!id){
@@ -160,7 +187,8 @@ function detail(root,c,e,m){
  const p=m._profile||{};
  const reliability=p.reliabilityEvidence||[];const validity=p.validityEvidence||[];
  const availability=[p.administration?'Administration guidance':'',reliability.length||m.reliability.published?'Reliability evidence':'',validity.length?'Validity evidence':'',studies.length?'Prior use':'',maps.length?'Verification relevance':''].filter(Boolean);
- root.innerHTML='<div class="m-shell">'+measurementNav('finder')+'<div class="m-crumb"><a href="#/measures">← Back to finder</a> / '+esc(familyLabels[m.family]||m.family)+'</div><div class="m-hero m-profile-hero"><div><div class="m-overline">MEASURE DECISION PROFILE · '+esc(m.id)+'</div><h1>'+esc(m.name)+'</h1><p>'+esc(p.summary||m.definition)+'</p><div class="m-chips">'+m.constructs.map(x=>'<a class="m-chip" href="#/measures/filter/'+encodeURIComponent(x)+'">'+esc(C(x,c.constructs))+'</a>').join('')+'</div></div><div class="m-profile-state"><span class="m-profile-state-label">AVAILABLE TO INSPECT</span>'+(availability.length?availability.map(x=>'<span class="m-profile-signal">'+esc(x)+'</span>').join(''):'<span class="m-profile-signal">Definition and operationalization</span>')+'</div></div>'+
+ const inSet=readStudySet().includes(m.id);
+ root.innerHTML='<div class="m-shell">'+measurementNav('finder')+studySetBar(c)+'<div class="m-crumb"><a href="#/measures">← Back to finder</a> / '+esc(familyLabels[m.family]||m.family)+'</div><div class="m-hero m-profile-hero"><div><div class="m-overline">MEASURE DECISION PROFILE · '+esc(m.id)+'</div><h1>'+esc(m.name)+'</h1><p>'+esc(p.summary||m.definition)+'</p><div class="m-chips">'+m.constructs.map(x=>'<a class="m-chip" href="#/measures/filter/'+encodeURIComponent(x)+'">'+esc(C(x,c.constructs))+'</a>').join('')+'</div><div class="m-hero-actions"><button class="m-action m-set-toggle" id="m-set-toggle" aria-pressed="'+inSet+'">'+(inSet?'Remove from study set':'Add to study set')+'</button>'+(readStudySet().length?'<a class="m-action" href="#/measures/compare">Compare study set</a>':'')+'</div></div><div class="m-profile-state"><span class="m-profile-state-label">AVAILABLE TO INSPECT</span>'+(availability.length?availability.map(x=>'<span class="m-profile-signal">'+esc(x)+'</span>').join(''):'<span class="m-profile-signal">Definition and operationalization</span>')+'</div></div>'+
  '<section class="m-decision-board" aria-label="Measure fit summary"><div><span>WHAT IT CAN TELL YOU</span><p>'+esc(m.definition)+'</p></div><div><span>HOW TO COLLECT IT</span><p>'+esc(m.operationalization)+'</p></div><div class="caution"><span>DO NOT INTERPRET WITHOUT</span><p>'+esc(m.validity.limitations)+'</p></div></section>'+
  '<nav class="m-jump" aria-label="Inspect this measure"><a href="#measure-use">Use and scoring</a><a href="#measure-reliability">Reliability</a><a href="#measure-validity">Validity</a><a href="#measure-factors">Factors and items</a><a href="#measure-studies">Prior studies</a><a href="#measure-standards">Standards</a><a href="#measure-analysis">Analysis</a></nav><div class="m-layout"><main class="m-detail m-profile-detail">'+
  '<details class="m-profile-section" id="measure-use" open><summary><span>Use and scoring</span><small>What to collect, when, and how to score it</small></summary><div><dl class="m-metadata">'+info('Units',m.units)+info('Collection time',m.timing)+info('Data modality',m.modality.join(', '))+info('Aggregation',m.aggregation)+info('Evidence status',m.evidenceStatus)+info('Applications',(m._applications||[]).join(', ')||'Context-specific')+'</dl>'+(p.administration?'<div class="m-callout"><h3>Administration and scoring</h3><p>'+esc(p.administration)+'</p>'+(p.licensing?'<p><strong>Access / licensing:</strong> '+esc(p.licensing)+'</p>':'')+'</div>':'<div class="m-empty-evidence"><strong>Administration record not yet curated.</strong><p>Use the cited original source and do not improvise item wording or scoring for a named instrument.</p></div>')+'</div></details>'+
@@ -171,6 +199,8 @@ function detail(root,c,e,m){
  '<details class="m-profile-section" id="measure-standards"><summary><span>Standards and verification use</span><small>Which criterion this evidence may support and the authority boundary</small></summary><div><p>Mappings identify candidate evidence for a criterion. A score or test result does not by itself demonstrate compliance or airworthiness.</p>'+(maps.length?maps.map(x=>mappingCard(x,e)).join(''):'<div class="m-empty-evidence"><strong>No clause-level mapping is curated.</strong><p>Do not infer a military-standard relationship from a similar-sounding construct.</p></div>')+'</div></details>'+
  '<details class="m-profile-section" id="measure-analysis"><summary><span>Analysis and small samples</span><small>How to summarize the result without overclaiming</small></summary><div><p>'+esc(m.analysis)+'</p><p><strong>Small-N caveat:</strong> '+esc(m.smallN)+'</p><p><strong>Context to define:</strong> '+esc(m.context)+'</p></div></details></main><aside class="m-sources"><div class="m-research-gap"><strong>Before you use this measure</strong><p>Resolve these questions with evidence from your own protocol and population.</p><ul>'+(p.researchNeeds||['Representative-population reliability','Construct evidence in the intended task','Instrumentation and scoring verification','Decision threshold authority']).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><h2>Source anchors</h2><p>These references support identity, framework, or precedent. Study and standards records carry their own locators and appraisal.</p>'+refs.map(x=>'<div class="m-source">'+link(x.url,x.title)+'<span>'+esc(x.authors)+' ('+esc(x.year)+')</span><small>'+esc(x.scope)+'</small></div>').join('')+'<a class="m-back" href="#/measures">← Return to finder</a></aside></div></div>';
  root.querySelectorAll('.m-jump a').forEach(a=>a.addEventListener('click',()=>{const target=root.querySelector(a.getAttribute('href'));if(target?.tagName==='DETAILS')target.open=true;}));
+ root.querySelector('#m-study-set-clear')?.addEventListener('click',()=>{writeStudySet([]);detail(root,c,e,m)});
+ root.querySelector('#m-set-toggle')?.addEventListener('click',()=>{const result=toggleStudySet(m.id);if(result.full){const b=root.querySelector('#m-set-toggle');b.textContent='Study set is full';return;}detail(root,c,e,m)});
 }
 
 function designList(root,c,d){
@@ -211,7 +241,7 @@ function list(root,c,d,e,{read=true}={}){
  const all=filterMeasures(c.measures,filters),available=all.slice(0,filters.show);
  const chips=c.constructs.map(x=>'<button class="m-topic '+(x.id===filters.construct?'active':'')+'" data-construct="'+esc(x.id)+'" aria-pressed="'+(x.id===filters.construct)+'">'+esc(x.label)+'</button>').join('');
  const hasFilters=['q','construct','family','modality','timing','standard','application','evidence'].some(k=>filters[k]);
- root.innerHTML='<div class="m-shell">'+measurementNav('finder')+
+ root.innerHTML='<div class="m-shell">'+measurementNav('finder')+studySetBar(c)+
  '<div class="m-hero m-finder-hero"><div class="m-overline">MEASUREMENT ATLAS / DECISION-FIRST FINDER</div><h1>What do you need to learn?</h1><p>Start with the decision the evidence must support. Then choose a context, inspect candidate measures, and open a profile to judge administration, reliability, validity, prior use, and verification relevance.</p><div class="m-hero-actions"><a class="m-action" href="#/measures/guide">Start the guided walkthrough →</a><a class="m-action" href="#/measures/verification">Plan verification</a><a class="m-action" href="#/measures/psychometrics">Judge scientific quality</a></div></div>'+
  '<section class="m-decisions" aria-labelledby="m-decision-title"><div class="m-decision-intro"><div class="m-overline">START WITH THE OUTCOME</div><h2 id="m-decision-title">Choose the question closest to yours</h2><p>You can refine the evidence set afterward.</p></div><button data-preset="application" data-value="flight-deck-display"><strong>Can the pilot see and interpret it?</strong><span>Displays, alerts, luminance, contrast, legibility</span></button><button data-preset="application" data-value="pilot-workload"><strong>Is workload acceptable?</strong><span>Ratings, performance, attention, control, physiology</span></button><button data-preset="construct" data-value="situation-awareness"><strong>Do they understand what is happening?</strong><span>Situation awareness, comprehension, state knowledge</span></button><button data-preset="application" data-value="pilot-ergonomics"><strong>Does it fit the pilot?</strong><span>Reach, clearance, posture, force, comfort</span></button><button data-preset="application" data-value="hmd-hud-vision"><strong>Does the HMD or HUD support the task?</strong><span>Optics, tracking, vision, imagery, integration</span></button><a href="#/measures/standards"><strong>What supports verification?</strong><span>Browse measures through military and civil guidance</span></a></section>'+
  '<section class="m-filter-panel" aria-label="Find measurements"><div class="m-section-head"><div><h2>Search candidates</h2><p>Search across definitions, evidence, outcomes, standards, and signals.</p></div><button id="m-copy-link" class="m-copy">Copy this view</button></div><label class="m-field m-search"><span>What are you measuring?</span><input id="m-query" type="search" value="'+esc(filters.q)+'" placeholder="Try contrast, NASA-TLX, reach, alert comprehension…"/></label><details class="m-advanced" '+(hasFilters?'open':'')+'><summary>Advanced filters <span>context, standard, evidence, method, sensor, timing, construct</span></summary><div class="m-filters six">'+select('m-application','Aviation context',appOpts,filters.application)+select('m-standard','Standard / guidance',standardOpts,filters.standard)+select('m-evidence','Evidence record',evidenceOpts,filters.evidence)+select('m-family','Method',opts('family'),filters.family)+select('m-modality','Sensor or collection',opts('modality'),filters.modality)+select('m-timing','Timing',opts('timing'),filters.timing)+'</div><h3>Construct</h3><div class="m-topics"><button class="m-topic '+(!filters.construct?'active':'')+'" data-construct="" aria-pressed="'+(!filters.construct)+'">All constructs</button>'+chips+'</div><button class="m-clear" id="m-clear">Clear filters</button></details></section>'+
@@ -224,6 +254,7 @@ function list(root,c,d,e,{read=true}={}){
  root.querySelector('#m-clear')?.addEventListener('click',()=>{Object.assign(filters,DEFAULT_FILTERS);update()});
  root.querySelector('#m-more')?.addEventListener('click',()=>{filters.show+=60;list(root,c,d,e,{read:false})});
  root.querySelector('#m-copy-link').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);root.querySelector('#m-copy-link').textContent='View copied';}catch{root.querySelector('#m-copy-link').textContent='Copy unavailable';}});
+ root.querySelector('#m-study-set-clear')?.addEventListener('click',()=>{writeStudySet([]);list(root,c,d,e,{read:false})});
 }
 
 export async function mountMeasures(root,ctx={}){
@@ -233,6 +264,7 @@ export async function mountMeasures(root,ctx={}){
   const issues=[...validateCatalog(c),...validateEvidence(c,e)];if(issues.length){root.innerHTML='<div class="m-note">Catalog validation failed: '+issues.length+' issue(s). Please inspect the source data.</div>';return;}
   const path=ctx.path||[];
   if(path[1]==='verification'){verificationPage(root,c,e,path[2]);return;}
+  if(path[1]==='compare'){comparePage(root,c,e);return;}
   if(path[1]==='guide'){guidePage(root);return;}
   if(path[1]==='psychometrics'){psychometricsPage(root,e);return;}
   if(path[1]==='standards'){standardsPage(root,e,path[2]);return;}
