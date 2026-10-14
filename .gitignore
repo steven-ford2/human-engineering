@@ -1,6 +1,9 @@
 **/__pycache__/
 *.pyc
 platform/dist/
+platform/dist-pages/
 context/search.sqlite
 .venv/
 .codex-build/
+.DS_Store
+.playwright-cli/

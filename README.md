@@ -1,13 +1,40 @@
 # Human Engineering
 
-Public-source human engineering research workspace. This repository was empty before the Codex setup on 2026-10-14. It currently contains a workflow scaffold, not a finished knowledge base or application.
+Human Engineering is a public, source-conscious workspace for moving from observed work to defensible human-system requirements and measurement plans. It brings together the complete task-analysis curriculum and workbench previously maintained in `fighterjets2` with the complete PVI usability and workload measurement catalog.
 
-- [Codex from desktop or phone](CODEX.md)
-- [Research](docs/research/README.md)
-- [Methods](docs/methods/README.md)
-- [Evidence and provenance](docs/evidence/README.md)
-- [Repository map](docs/codex/REPO_MAP.md)
+[Codex workflow](CODEX.md) · [Repository map](docs/codex/REPO_MAP.md) · [Migration provenance](MIGRATION.md)
 
-Use rigorous source attribution and preserve original technical terms. Link to the separate [FighterJets curriculum](https://github.com/steven-ford2/FighterJets) and [FighterJets II research Atlas](https://github.com/steven-ford2/fighterjets2) rather than duplicating their canonical content.
+## Interactive interface
 
-No application, Pages deployment or research corpus has been imported.
+The static HTML application provides four connected modes:
+
+- **Task-analysis workbench** — author scenarios, hierarchical tasks, decisions, information needs, control needs, requirements, tests, and evidence; review traceability, structural diagnostics, coverage, and quality; exchange complete JSON projects and per-register CSV.
+- **Measurement Atlas** — search and filter 212 candidate measures across 31 constructs; inspect operational definitions, units, collection timing, reliability/validity cautions, small-sample guidance, and source anchors; explore 25 study-design patterns.
+- **Methods and curriculum** — read the 16-week course, field methods, worked synthetic cases, templates, evidence synthesis, assessment material, and measurement guidance.
+- **Knowledge and study tools** — follow cross-document concepts, keep local notes and bookmarks, and practice source-authored recall prompts.
+
+All browser-authored data stay in the current browser unless explicitly exported. The interface has no server write path.
+
+## Run locally
+
+```bash
+python -m pip install -r platform/requirements.txt
+python platform/build.py --profile pages
+python -m http.server --bind 127.0.0.1 --directory platform/dist 8000
+```
+
+Open `http://127.0.0.1:8000/`.
+
+## Verify
+
+```bash
+python tools/codex/check.py full
+```
+
+The full profile runs the Python build tests, JavaScript syntax and behavior suites, the curated Pages build, and the repository link audit.
+
+## Research boundaries
+
+The repository contains public research, original synthesis, reusable templates, and synthetic examples. Candidate measures are not automatically valid for a new task, population, simulator, display, or operational context. A high questionnaire score, a physiological difference, or a successful structural trace does not by itself establish safety, certification, operational validity, or causal efficacy. Verify original instrument manuals and current standards before professional use.
+
+See [MIGRATION.md](MIGRATION.md) for file-level provenance and [WORKBENCH.md](WORKBENCH.md) for operation and data safeguards.

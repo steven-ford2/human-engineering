@@ -1,0 +1,1 @@
+task_id,function_id,scenario_ids,actor_role,task_goal,trigger,preconditions,task_actions,task_plan,concurrent_tasks,time_constraints,operational_completion_state,performance_tolerance,possible_errors,recovery_actions,decision_ids,authority,source_ids,basis,status,reviewer,open_questions

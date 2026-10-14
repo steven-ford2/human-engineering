@@ -1,0 +1,18 @@
+{
+  "name": "Human Engineering",
+  "version": 1,
+  "visibility": "public-pages",
+  "domains": [
+    {
+      "path": "domains/task-analysis",
+      "number": "01",
+      "title": "Task Analysis and Cognitive Work Engineering"
+    },
+    {
+      "path": "domains/pvi-measurement",
+      "number": "02",
+      "title": "Usability, Workload and Human-Systems Measurement"
+    }
+  ]
+}
+

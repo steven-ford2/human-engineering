@@ -1,0 +1,255 @@
+{
+  "schemaVersion": "1.0.0",
+  "designs": [
+    {
+      "id": "counterbalanced-within-subject-a-b",
+      "name": "Counterbalanced within-subject A/B",
+      "description": "Pilot sees both conditions",
+      "outcome": "Paired accuracy/time/SEQ differences",
+      "protocol": "Use alternate item forms; balance A→B vs B→A",
+      "limitations": "Carryover and fatigue; n pilots, not n trials",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "parallel-monadic",
+      "name": "Parallel monadic",
+      "description": "Each participant sees one design",
+      "outcome": "Between-group accuracy/satisfaction contrast",
+      "protocol": "Randomize assignment and hold stimulus equal",
+      "limitations": "Small n inefficient; baseline imbalance",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "sequential-monadic",
+      "name": "Sequential monadic",
+      "description": "Each pilot evaluates independently then directly compares",
+      "outcome": "Condition scores plus final preference",
+      "protocol": "Collect objective data before direct comparison",
+      "limitations": "Ordering bias and motivated preference",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "paired-forced-choice",
+      "name": "Paired forced choice",
+      "description": "Pilot chooses between two designs for a fixed goal",
+      "outcome": "Choice proportion",
+      "protocol": "Randomize left-right and order",
+      "limitations": "Preference is not correctness",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "best-worst-scaling-maxdiff",
+      "name": "Best–worst scaling / MaxDiff",
+      "description": "Pick most and least important items from balanced subsets",
+      "outcome": "Relative utilities / best-minus-worst scores",
+      "protocol": "Balanced incomplete block design and repeated exposures",
+      "limitations": "Latent utilities weakly identified with small n",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "discrete-choice-experiment",
+      "name": "Discrete-choice experiment",
+      "description": "Choose alternatives with several controlled features",
+      "outcome": "Feature tradeoff utilities",
+      "protocol": "Fractional-factorial choice design; limit attributes",
+      "limitations": "Heavy sample demand; model assumptions",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "conjoint-ratings",
+      "name": "Conjoint ratings",
+      "description": "Rate randomized bundles of interface attributes",
+      "outcome": "Marginal effects on ratings",
+      "protocol": "Block stimuli, use neutral anchors",
+      "limitations": "Rating responses not revealed preferences",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "full-ranking",
+      "name": "Full ranking",
+      "description": "Rank a limited list of design attributes",
+      "outcome": "Rank concordance",
+      "protocol": "Randomize presentation order",
+      "limitations": "No magnitude between ranks",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "constant-sum-allocation",
+      "name": "Constant-sum allocation",
+      "description": "Assign 100 points across usability priorities",
+      "outcome": "Relative importance proportions",
+      "protocol": "Check totals and explain unavoidable tradeoffs",
+      "limitations": "Ipsative compositions; cannot analyze items as independent",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "vignette-state-prediction",
+      "name": "Vignette state prediction",
+      "description": "Read synthetic mode state then predict next action",
+      "outcome": "Correctness, latency, confidence",
+      "protocol": "Predeclare state machine; randomly vary display only",
+      "limitations": "Tests interpretation not full simulator competence",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "timed-symbol-comprehension",
+      "name": "Timed symbol comprehension",
+      "description": "Expose new symbology briefly",
+      "outcome": "Correct identification and response time",
+      "protocol": "Equivalent symbols, fixed timing, device stratification",
+      "limitations": "Uncalibrated remote contrast, visual angle",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "alert-triage-judgments",
+      "name": "Alert triage judgments",
+      "description": "Order response priorities in a synthetic compound alert",
+      "outcome": "Rank accuracy, harm-weighted misranking",
+      "protocol": "Expert review of consequences and response windows",
+      "limitations": "Priority depends on operational context",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "signal-detection-displays",
+      "name": "Signal-detection displays",
+      "description": "Target-present and target-absent screens",
+      "outcome": "d-prime, criterion, RT",
+      "protocol": "Fix prevalence; record missed targets and false alarms",
+      "limitations": "Small n yields unstable extreme rates",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "confidence-calibration",
+      "name": "Confidence calibration",
+      "description": "Ask confidence 0–100 for objective response",
+      "outcome": "Brier score / calibration",
+      "protocol": "Sufficient mixed-difficulty items",
+      "limitations": "Few responses cannot estimate individual calibration",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "information-retrieval-challenge",
+      "name": "Information retrieval challenge",
+      "description": "Find correct instrument value in display",
+      "outcome": "Time and accuracy",
+      "protocol": "Matched demands; cancel timing if incorrect",
+      "limitations": "Screen reading versus understanding",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "recognition-memory-comparison",
+      "name": "Recognition-memory comparison",
+      "description": "Recall important annunciated state after delay",
+      "outcome": "Delayed correctness",
+      "protocol": "Equivalent lure difficulty and delay",
+      "limitations": "Memory not identical to situational awareness",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "adaptive-threshold-staircase",
+      "name": "Adaptive threshold staircase",
+      "description": "Identify characters over changing contrasts/exposures",
+      "outcome": "Psychometric threshold",
+      "protocol": "Predefine adaptive algorithm/catch trials",
+      "limitations": "Online devices cannot establish physical luminance threshold",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "abab-single-case",
+      "name": "ABAB single-case",
+      "description": "Alternate intervention and baseline on repeatable tasks",
+      "outcome": "Change in per-phase individual trend",
+      "protocol": "Stable baseline and reversible effect",
+      "limitations": "Learning violates reversibility",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "multiple-baseline-single-case",
+      "name": "Multiple-baseline single-case",
+      "description": "Stagger intervention across tasks/pilots",
+      "outcome": "Cross-baseline timing contrast",
+      "protocol": "Enough stable observations and independent replication",
+      "limitations": "History and drift",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "repeated-diary-experience-sampling",
+      "name": "Repeated diary / experience sampling",
+      "description": "Brief evaluations after real or simulated tasks over time",
+      "outcome": "Within-person trends",
+      "protocol": "Timestamp event and same questionnaire anchor",
+      "limitations": "Recall, self-selection, incomplete episodes",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "instrumented-prototype-a-b",
+      "name": "Instrumented prototype A/B",
+      "description": "Randomized UI variants logged during use",
+      "outcome": "Task completion, errors, navigation",
+      "protocol": "Equal fidelity; verify instrumentation",
+      "limitations": "Prototype might not represent physical cockpit",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "balanced-incomplete-block-comparison",
+      "name": "Balanced incomplete-block comparison",
+      "description": "Each respondent evaluates subset of many designs",
+      "outcome": "Relative task accuracy or preference",
+      "protocol": "Network-connected comparisons and design balance",
+      "limitations": "Sparse comparisons lead to unreliable ranking",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "response-surface-experiment",
+      "name": "Response-surface experiment",
+      "description": "Manipulate symbol size/contrast/clutter continuously",
+      "outcome": "Performance function and interactions",
+      "protocol": "Limited-dimensional factorial or central composite plan",
+      "limitations": "Uncalibrated online stimuli",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "interrupted-task-resumption",
+      "name": "Interrupted task resumption",
+      "description": "Insert competing task at scripted moment",
+      "outcome": "Resumption time, omission count",
+      "protocol": "Match interruption relevance and duration",
+      "limitations": "Artificial interruption may differ from operations",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    },
+    {
+      "id": "voice-versus-hotas-crossover",
+      "name": "Voice versus HOTAS crossover",
+      "description": "Compare equivalent command goals under both modalities",
+      "outcome": "Command accuracy, latency, repetition",
+      "protocol": "Counterbalance modality and command vocabulary",
+      "limitations": "Speech acoustics/device confounds",
+      "smallN": "Use within-person repetitions, participant-level estimates and uncertainty where possible; no fixed sample size or power guarantee; document task and item heterogeneity.",
+      "status": "methodological research design—not a validated instrument"
+    }
+  ]
+}

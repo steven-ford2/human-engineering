@@ -29,13 +29,13 @@ In a legacy environment's setup-script field use `python tools/codex/setup.py`; 
 The devcontainer installs Python 3.12 and Node 22, runs the setup script, and forwards port 8000 privately. Open the repo in GitHub Codespaces if you need an editor/terminal in a phone browser. Codespaces billing and quotas are separate from ChatGPT.
 Install Codex CLI from its official npm package with `npm install -g @openai/codex`, run `codex`, and choose ChatGPT sign-in. A GitHub/Copilot subscription does not replace ChatGPT authentication. Codex CLI is deliberately not installed automatically by this repo.
 
-There is no website to preview yet.
+The repository includes a static Human Engineering site. Build it with `python platform/build.py --profile pages`, serve `platform/dist` on port 8000, and preview it at the forwarded address.
 
 ## Efficient execution
 - Use the repository map and scope searches to one course/domain before widening.
 - `python tools/codex/context.py "helmet" --path docs --limit 20` returns bounded file/line snippets. It does not create a second full-text corpus.
-- `python tools/codex/check.py tooling` validates this setup.
-- Only tooling is supported until actual application/corpus checks are defined.
+- `python tools/codex/check.py tooling` validates the portable workflow.
+- `python tools/codex/check.py platform` validates the application and corpus; `full` runs the complete configured profile.
 - Do not rerun a full source conversion for a wording change. For source edits run the affected validators and inspect citations/locators; UI edits also require browser QA at desktop and phone widths.
 - For parallel work use separate tasks and branches. Git commits/PRs carry durable state across devices; uncommitted files from one task are not present in a new task.
 

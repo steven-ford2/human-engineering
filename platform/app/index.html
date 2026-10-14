@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#193d43" />
+<meta name="description" content="Human Engineering — interactive task analysis, cognitive work engineering, usability measurement, and evidence-guided evaluation." />
+<title>Human Engineering | Task Analysis & Measurement</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="./style.css" />
+<link rel="stylesheet" href="./workbench.css" />
+<link rel="stylesheet" href="./measures.css" />
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+ <div class="brand"><button id="menuToggle" class="icon-btn mobile-menu" aria-label="Open domain navigation" aria-expanded="false">☰</button><a href="#/home" aria-label="Human Engineering home" class="brand-link"><span class="brand-icon" aria-hidden="true">⌁</span><span class="brand-name">HUMAN <em>ENGINEERING</em></span></a><span class="edition">EVIDENCE WORKSPACE 1.0</span></div>
+ <nav class="topnav" aria-label="Main areas"><a href="#/home" data-nav="home">Overview</a><a href="#/workbench" data-nav="workbench">Workbench</a><a href="#/measures" data-nav="measures">Measures</a><a href="#/academy" data-nav="academy">Methods</a><a href="#/wiki" data-nav="wiki">Knowledge</a><a href="#/study" data-nav="study">Study</a></nav>
+ <div class="top-actions"><button id="searchOpen" class="search-launch" aria-label="Search courses and knowledge"><span aria-hidden="true">⌕</span> <span class="search-text">Search everything</span><kbd>/</kbd></button><button id="themeToggle" class="icon-btn" aria-label="Toggle light and dark appearance">◐</button><button id="settingsOpen" class="icon-btn" aria-label="Settings and data export">⚙</button></div>
+</header>
+<div class="app-shell"><aside class="sidebar" id="sidebar" aria-label="Domain navigation"><div class="side-top"><div class="eyebrow">RESEARCH DOMAINS</div><div class="side-head">From work to evidence</div></div><div id="courseNavigation" class="course-navigation"></div><div class="side-footer"><a class="side-link" href="#/workbench">▦ &nbsp;Analysis workbench</a><a class="side-link" href="#/measures">▤ &nbsp;Measurement Atlas</a><button id="recentButton" class="side-link">↳ &nbsp;Continue reading</button><button id="bookmarkList" class="side-link">◇ &nbsp;Saved sources</button><div class="microtext">Public research · Browser-local authoring</div></div></aside>
+<main id="main" tabindex="-1" class="main-content"><div class="loading">Indexing Human Engineering…</div></main>
+<aside id="contextPanel" class="context-panel" aria-label="Contextual tools" hidden></aside></div>
+<div id="searchDialog" class="overlay" hidden><section class="search-modal" role="dialog" aria-modal="true" aria-label="Search Human Engineering"><div class="search-bar"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" autocomplete="off" placeholder="Search methods, measures, cases, templates, sources…" aria-label="Search all indexed content" /><button id="searchClose" class="icon-btn" aria-label="Close search">✕</button></div><div class="search-help">Search the complete task-analysis and measurement domains. Use ↑ ↓ and Enter to navigate.</div><div id="searchResults" class="search-results" aria-live="polite"></div></section></div>
+<div id="settingsDialog" class="overlay" hidden><section class="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle"><div class="modal-header"><h2 id="settingsTitle">Your local study data</h2><button id="settingsClose" class="icon-btn" aria-label="Close settings">✕</button></div><p>Progress, notes, bookmarks, and review history are stored in this browser. Workbench projects have their own export controls. Nothing is associated with your GitHub account or synchronized between devices.</p><div class="setting-actions"><button class="primary-button" id="exportButton">Export study data (.json)</button><label class="secondary-button import-label">Import a backup<input type="file" id="importFile" accept="application/json,.json" hidden /></label></div><p class="microtext">Import replaces current local study data after confirmation. Keep a backup before clearing browser storage.</p><div class="setting-row"><div><strong>Reading theme</strong><p class="microtext">Changes only this device.</p></div><button id="themeSettings" class="secondary-button">Switch theme</button></div><a class="simple-link" href="https://github.com/steven-ford2/human-engineering" target="_blank" rel="noopener noreferrer">View repository source ↗</a></section></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<script type="module" src="./app.js"></script>
+</body></html>

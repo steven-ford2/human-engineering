@@ -1,0 +1,45 @@
+name: Validate Human Engineering
+on:
+  push:
+    branches: [main, 'migration/**', 'feat/**', 'codex/**']
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m pip install -r platform/requirements.txt
+      - run: python -m unittest discover -s platform/tests -v
+      - run: node --check platform/app/app.js
+      - run: node --check platform/app/measures.js
+      - run: node --check platform/app/workbench.js
+      - run: node --test platform/tests/test_measurement.mjs platform/tests/test_workbench.mjs platform/tests/test_workbench_quality.mjs
+      - run: python platform/build.py --profile pages
+      - run: python tools/check_links.py
+      - name: Verify public artifact
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          out=Path('platform/dist')
+          manifest=json.loads((out/'manifest.json').read_text())
+          catalog=json.loads((out/'measurement-data/measures.json').read_text())
+          designs=json.loads((out/'measurement-data/study-designs.json').read_text())
+          assert manifest['profile']=='pages'
+          assert {c['source'] for c in manifest['courses']}=={'domains/task-analysis','domains/pvi-measurement'}
+          assert len(manifest['docs'])==67
+          assert len(catalog['measures'])==212
+          assert len(catalog['constructs'])==31
+          assert len(designs['designs'])==25
+          assert not manifest['warnings']
+          print('Validated',len(manifest['docs']),'documents and',len(catalog['measures']),'measures')
+          PY
+
