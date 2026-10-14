@@ -25,7 +25,7 @@ Canonical research remains under `domains/pvi-measurement/`. Interface changes b
 - Light and dark appearance inspected. Browser console messages observed were Chrome-extension message-channel errors, not application exceptions.
 
 ## Remaining and next action
-Commit pass 5, push the branch, open and merge a pull request, then verify the deployed GitHub Pages routes.
+Complete. Pull request #5 was squash-merged to `main` as `f449619`; verify the deployed GitHub Pages routes after the Pages workflow finishes.
 
 ## Sources and decisions
 - Current product screenshots captured 2026-10-14 from the live GitHub Pages site.
