@@ -26,6 +26,7 @@ Canonical paths:
 - Real-browser desktop checks passed for the finder, HMD/HUD preset (94 results), show-more state (60 → 94 without reset), SUS deep profile (3 studies, standards mapping, 10 cited item loadings), 9-source standards explorer, MIL-HDBK-516D authority note, five-step coworker guide, and 21-concept psychometrics guide.
 - Responsive checks at 390 × 844 found and fixed two horizontal-overflow defects (late search-button CSS override and profile grid min-content width). Finder and profile then measured no document-level horizontal overflow.
 - Final full repository validation repeated clean after responsive fixes. Hosted Pages verification remains pending.
+- Initial GitHub validation reached and passed every code/build/link step, then the public-artifact guard failed because it still asserted the pre-expansion totals. Updated the guard to assert the new catalog/evidence totals; rerun pending.
 
 ## Remaining and next action
 Commit, open a PR, merge after checks, and verify GitHub Pages.
