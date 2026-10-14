@@ -26,7 +26,7 @@ Move the canonical task-analysis and usability-measurement domains from `steven-
 
 ## Remaining and next action
 
-Open the pull request, confirm GitHub Actions and Pages deployment, merge it, then complete and publish the coordinated FighterJets II removal commit.
+None for this migration. Pull request 1 merged as `5fcd3c5121b43128387191ef8da2b589fa2f493c`; all validation and deployment workflows passed, Pages now uses GitHub Actions, and the live interface was verified. The coordinated FighterJets II removal merged in pull request 4 as `4eddac1fc3fc74d7f3ce695a8dfc1b7cd3d485c9`.
 
 ## Sources and decisions
 
