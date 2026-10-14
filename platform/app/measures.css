@@ -1,0 +1,51 @@
+/* Research measure explorer: scoped to .m-* to avoid workbench regressions */
+.m-shell{max-width:1320px;margin:0 auto;padding:16px 4px 70px;color:var(--ink,#163448)}
+.m-shell a{color:inherit}
+.m-hero{padding:36px;border-radius:20px;background:linear-gradient(130deg,#173b3f,#1d6766 72%,#a85f43 150%);color:#f7fbfe;margin-bottom:22px;box-shadow:0 14px 35px rgba(20,58,56,.1)}
+.m-hero h1{font-size:clamp(2rem,4vw,3.3rem);letter-spacing:-.04em;line-height:1.08;margin:9px 0}
+.m-hero p{max-width:850px;line-height:1.65;color:#dce8ed}
+.m-overline,.m-card-tag{letter-spacing:.14em;text-transform:uppercase;font-size:.68rem;font-weight:750}
+.m-stat{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}
+.m-stat span{display:flex;gap:8px;align-items:baseline;border:1px solid #ffffff40;padding:8px 12px;border-radius:9px;color:#e5eff3}
+.m-stat strong{font-size:1.35rem;color:#fff}
+.m-action{display:inline-block;border-radius:9px;padding:10px 16px;border:1px solid #aacbdc;text-decoration:none;font-weight:700;color:#fff!important}
+.m-filter-panel{padding:23px;border:1px solid #ccd9df;border-radius:16px;background:var(--surface,#fff);margin-bottom:20px}
+.m-filter-panel h2,.m-results h2{font-size:1.18rem;margin:0 0 13px}
+.m-filter-panel h3{font-size:.9rem;margin:20px 0 12px}
+.m-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
+.m-field{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:.83rem}
+.m-field input,.m-field select{width:100%;box-sizing:border-box;border:1px solid #b9cdd7;border-radius:9px;padding:11px 12px;background:var(--surface,#fff);color:var(--ink,#193649);font:inherit}
+.m-field input:focus,.m-field select:focus,.m-shell button:focus-visible,.m-shell a:focus-visible{outline:3px solid #4d8aa6;outline-offset:2px}
+.m-topics{display:flex;flex-wrap:wrap;gap:7px}
+.m-topic{border:1px solid #b7cbd6;background:transparent;border-radius:999px;padding:7px 11px;color:var(--ink,#193649);font-size:.8rem;cursor:pointer}
+.m-topic small{opacity:.6}
+.m-topic.active{background:#176c70;color:white;border-color:#176c70}
+.m-clear,.m-more{border:1px solid #aec3ce;background:transparent;color:var(--ink,#193649);border-radius:8px;padding:10px 16px;margin-top:15px;cursor:pointer}
+.m-results{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0 12px}
+.m-results span{font-size:.82rem;opacity:.7}
+.m-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.m-card{display:flex;flex-direction:column;border:1px solid #cbd8df;background:var(--surface,#fff);border-radius:13px;padding:17px;text-decoration:none;transition:border-color .15s,transform .15s}
+.m-card:hover{border-color:#36758f;transform:translateY(-2px)}
+.m-card-tag{color:#44748c;letter-spacing:.06em}
+.m-card h2{font-size:1.02rem;line-height:1.25;margin:9px 0}
+.m-card p{font-size:.84rem;line-height:1.48;opacity:.78;flex:1}
+.m-card-chips,.m-chips{display:flex;gap:5px;flex-wrap:wrap}
+.m-card-chips span,.m-chip{border-radius:20px;background:#e6f0f4;color:#20485f;padding:4px 8px;font-size:.72rem;text-decoration:none}
+.m-card-bottom{border-top:1px solid #d8e2e7;padding-top:11px;margin-top:13px;font-size:.73rem;font-weight:700;color:#346d87}
+.m-note{border-left:3px solid #547b8e;background:var(--surface,#f6fafb);padding:16px;line-height:1.55;border-radius:4px;margin:26px 0}
+.m-crumb{font-size:.83rem;margin:10px 0 20px;opacity:.78}
+.m-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(235px,1fr);gap:24px}
+.m-detail,.m-sources{background:var(--surface,#fff);padding:25px;border:1px solid #cad9e0;border-radius:12px;line-height:1.6}
+.m-detail h2,.m-sources h2{font-size:1.15rem;margin:14px 0 4px}
+.m-metadata{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.m-meta{border:1px solid #d4e0e5;border-radius:8px;padding:10px;min-width:0}
+.m-meta dt{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;opacity:.7}
+.m-meta dd{margin:5px 0 0;overflow-wrap:anywhere;font-size:.9rem}
+.m-source{border-top:1px solid #d4e0e5;padding:13px 0;display:flex;flex-direction:column;gap:5px}
+.m-source a{font-weight:650;overflow-wrap:anywhere}
+.m-source span,.m-source small{font-size:.77rem;opacity:.72}
+.m-warning{border-left:3px solid #b9804c;padding:10px 14px;background:rgba(190,145,75,.09)}
+.m-fact{border-left:3px solid #3d8875;padding:10px 14px;background:rgba(56,150,126,.09)}
+.m-back{display:inline-block;margin-top:10px}
+@media(max-width:700px){.m-hero{padding:23px}.m-filters,.m-layout,.m-metadata{grid-template-columns:1fr}.m-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.m-card{transition:none}}

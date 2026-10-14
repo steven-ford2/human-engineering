@@ -1,0 +1,1 @@
+decision_id,task_ids,scenario_ids,operational_question,alternatives,trigger_event,available_time,deadline_rationale,relevant_cues,expert_reasoning,uncertainties,decision_consequence,information_need_ids,control_need_ids,source_ids,basis,status,reviewer,open_questions

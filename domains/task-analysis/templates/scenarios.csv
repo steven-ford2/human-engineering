@@ -1,0 +1,1 @@
+scenario_id,mission_id,mission_element,objective,actor_roles,system_configuration,mission_phase,initial_state,environment,nominal_or_degraded,mode_variants,concurrent_tasks,trigger,success_end_state,failed_end_state,branches,coverage_rationale,priority,source_ids,basis,status,reviewer,open_questions

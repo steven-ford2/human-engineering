@@ -1,0 +1,7 @@
+platform/dist/
+platform/dist-pages/
+**/__pycache__/
+*.pyc
+.DS_Store
+.playwright-cli/
+
