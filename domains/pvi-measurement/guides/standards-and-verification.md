@@ -62,3 +62,9 @@ For anthropometric or ergonomic claims, record the approved target population an
 - “A metadata-only or controlled standard has a verified clause mapping.”
 
 The source audit and full clause inventory are in [Aviation measures and standards crosswalk](../../../docs/research/aviation-measures-and-standards-crosswalk.md).
+
+## Move from a mapping to a verification case
+
+A standards mapping is only one input. Freeze the full review object in a `verification_case_id`: decision authority, exact requirement/revision/clause and tailoring, configuration, scenario/task/need/hazard trace, failure mechanism, primary outcome, acceptance basis and approver, measure roles, condition matrix, participants/gear, test stage, instrumentation/calibration/uncertainty, data-quality rules, artifacts, deviations, discrepancies, finding, transfer limits and authority disposition.
+
+Use the four source-backed [scenario-to-verification pathways](../../../docs/research/scenario-to-verification-flagship-pathways.md) in the interactive Verification studio, then record the program-specific plan in the blank [verification-case register](../../task-analysis/templates/verification-cases.csv). The examples remain planning aids; they are not approved requirements or test plans.
