@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {dirname, resolve} from 'node:path';
-import {enrich, filterMeasures, validateCatalog, validateEvidence} from '../app/measures.js';
+import {enrich, filterMeasures, rankMeasures, validateCatalog, validateEvidence} from '../app/measures.js';
 const here=dirname(fileURLToPath(import.meta.url));
 const root=resolve(here,'../..');
 const c=JSON.parse(readFileSync(resolve(root,'domains/pvi-measurement/catalog/measures.json'),'utf8'));
@@ -46,6 +46,12 @@ test('finder evidence-status facets expose both curated records and research que
   assert.ok(filterMeasures(enriched.measures,{evidence:'studied'}).length>=30);
   assert.ok(filterMeasures(enriched.measures,{evidence:'mapped'}).length>=100);
   assert.ok(filterMeasures(enriched.measures,{evidence:'needs-appraisal'}).length>=150);
+});
+test('decision-first ranking favors direct context fit and inspectable evidence',()=>{
+  const rankedCatalog=enrich(structuredClone(c),evidence);
+  const ranked=rankMeasures(filterMeasures(rankedCatalog.measures,{application:'pilot-workload'}),{application:'pilot-workload'});
+  assert.equal(ranked[0].applications.includes('pilot-workload'),true);
+  assert.equal(Boolean(ranked[0]._profile||ranked[0]._studyCount),true);
 });
 test('aviation expansion covers display, vision, ergonomics and handling',()=>{
   assert.ok(filterMeasures(c.measures,{family:'display'}).length>=34);
