@@ -17,7 +17,7 @@ Canonical paths:
 - Confirmed MIL-STD-1787 is the requested display-symbology standard.
 - Agreed to defer the exhaustive paper search while the user uses Gemini/Google Scholar, preserving Codex credits for evidence integration, standards work, and interface development.
 - Added `tools/export_measure_study_search.mjs`, which deterministically exports all canonical measures and rejects duplicate IDs, duplicate names, and unknown evidence-status values.
-- Generated a 279-row Scholar-ready CSV, a complete alphabetical Markdown inventory, and a row-level study-use results template.
+- Generated a 279-row Scholar-ready CSV, a complete alphabetical Markdown inventory, and a row-level study-use results template that also records search database, queries, date, and no-result screening notes.
 - Included each measure's constructs, operationalization, units, source IDs, existing Atlas study links, profile status, exact-label query, broader starter query, and evidence-status-specific search guidance.
 - Added explicit evidence rules so exact uses, variants, related operationalizations, abstract-only evidence, missing information, and unsuccessful searches remain distinguishable.
 

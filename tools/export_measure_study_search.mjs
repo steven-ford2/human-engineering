@@ -98,6 +98,11 @@ const inventoryRows = catalog.measures.map((measure, index) => [
 const resultHeader = [
   'measure_id',
   'measure_name',
+  'search_database',
+  'search_queries',
+  'search_date',
+  'qualifying_use_found_yes_or_no',
+  'no_use_screening_notes',
   'match_type_exact_variant_or_related',
   'study_title',
   'authors',
