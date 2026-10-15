@@ -118,6 +118,18 @@
       "sourceNote": "Official ASSIST metadata checked on 2026-10-14; full controlled text was not used."
     },
     {
+      "id": "mil-std-1787d",
+      "shortTitle": "MIL-STD-1787D",
+      "title": "Aircraft Display Symbology",
+      "publisher": "U.S. Department of Defense",
+      "revisionDate": "16 Mar 2018",
+      "status": "active; controlled text",
+      "url": "https://quicksearch.dla.mil/qsDocDetails.aspx?ident_number=37143",
+      "scope": "ASSIST identifies primary flight reference and electro-optical aircraft display symbology for takeoff, navigation, terrain following/avoidance, weapon delivery, and landing, including symbol geometry and information content.",
+      "authorityNote": "The current Revision D text has Distribution Statement D. Its clauses and thresholds are not publicly available here; no clause-level measure mapping or compliance claim is asserted without authorized text and program applicability.",
+      "sourceNote": "Official ASSIST public metadata checked on 2026-10-15. Revision D is controlled distribution; this record uses metadata only."
+    },
+    {
       "id": "faa-hf-v3",
       "shortTitle": "FAA HF Version 3.0",
       "title": "Human Factors Considerations in the Design and Evaluation of Flight Deck Displays and Controls",
@@ -1279,8 +1291,30 @@
   "measureProfiles": {
     "nasa-task-load-index-weighted": {
       "summary": "Six-dimensional retrospective workload rating using the original pairwise weighting procedure.",
-      "administration": "Use the official NASA-TLX instructions. Collect Mental, Physical, and Temporal Demand, Performance, Effort, and Frustration ratings; conduct pairwise source-of-workload comparisons for the weighted version; record timing and task segment.",
-      "licensing": "NASA provides the instrument and manual. Confirm the current official use notice and preserve item wording/scoring.",
+      "administration": "Rate six workload dimensions for each defined task segment, then obtain 15 pairwise source-of-workload choices after task exposure. Weight each dimension by its choice count and divide the weighted sum by 15.",
+      "administrationSteps": [
+        "Define the participant, task or condition, and exact segment being rated. Use the same rating point across comparable conditions; collect the ratings during or soon after that segment, as specified in your protocol.",
+        "Explain the six dimensions below and their anchors to the participant. Resolve questions and allow practice before using scored ratings. Ask about the workload of the specified task, not general ability or the entire test day.",
+        "For every rated segment or condition, obtain all six dimension ratings on the original 0–100 scale in increments of 5. Record each rating separately. On the original paper scale, a mark between ticks is assigned to the tick on its right.",
+        "After the participant has experienced the task, present every distinct pair of the six dimension names once: 15 choices in a randomized order for each participant. For each pair ask which dimension contributed more to workload in that task. Use new weights for a structurally different task; document any reuse across comparable difficulty variants."
+      ],
+      "scoringSteps": [
+        "For each participant and task structure, count how often each dimension was selected in the 15 pairs. Each weight is 0–5; the six weights must sum to 15.",
+        "For each rated task condition calculate (Mental×weight + Physical×weight + Temporal×weight + Performance×weight + Effort×weight + Frustration×weight) ÷ 15. The result is on a 0–100 scale.",
+        "Performance is anchored Good at the low end and Poor at the high end: a higher number means poorer perceived performance and more contribution to workload. Do not reverse-code it again.",
+        "Report the weighted composite together with the six ratings, six weights, task/segment and rating timing. State missing-rating or missing-pair handling; do not present an incomplete score as the original weighted TLX."
+      ],
+      "dimensionGuide": [
+        {"name":"Mental Demand","meaning":"Amount of thinking, deciding, remembering, looking and other mental or perceptual activity required.","anchors":"Low → High"},
+        {"name":"Physical Demand","meaning":"Amount of physical activity required.","anchors":"Low → High"},
+        {"name":"Temporal Demand","meaning":"Time pressure imposed by the pace of the task or its events.","anchors":"Low → High"},
+        {"name":"Performance","meaning":"The participant's perceived success at meeting the task goals.","anchors":"Good (0) → Poor (100)"},
+        {"name":"Effort","meaning":"Mental and physical work required to achieve that performance.","anchors":"Low → High"},
+        {"name":"Frustration","meaning":"Feeling insecure, discouraged, irritated or stressed rather than content and relaxed.","anchors":"Low → High"}
+      ],
+      "pairwiseComparisons": true,
+      "procedureSource": {"label":"NASA-TLX Paper and Pencil Package, v1.0, §§2–4 and appendices A–E","url":"https://www.nasa.gov/wp-content/uploads/2026/03/nasa-tlx-v1-0-searchable-text-and-forms.pdf"},
+      "licensing": "NASA states that the TLX may be used or modified without seeking NASA permission. Preserve the original six dimensions and scoring if reporting the unmodified weighted TLX; identify and validate any adaptation.",
       "reliabilityEvidence": [
         {
           "label": "No universal coefficient",
@@ -1325,8 +1359,30 @@
     },
     "raw-nasa-tlx": {
       "summary": "Unweighted mean or sum of the six NASA-TLX dimension ratings; a common modification that must be named as Raw TLX.",
-      "administration": "Use the six official dimension ratings but omit pairwise weighting. State that the score is Raw TLX, name the rating scale/version, record direction of the Performance item, and preserve subscales.",
-      "licensing": "NASA provides the instrument and manual. Confirm current official instructions and do not silently modify items.",
+      "administration": "Rate the six NASA-TLX dimensions for each defined task segment and average the six ratings. Raw TLX deliberately omits the original pairwise weighting step.",
+      "administrationSteps": [
+        "Define the participant, task or condition, and exact segment being rated. Use a consistent rating point across comparable conditions.",
+        "Explain the six dimensions below and their anchors; resolve questions and allow practice before scored ratings.",
+        "For every rated segment or condition, obtain all six ratings on the original 0–100 scale in increments of 5. Keep each dimension rating. On the original paper scale, a mark between ticks is assigned to the tick on its right.",
+        "Do not conduct the 15 pairwise comparisons when the intended result is Raw TLX. Name this unweighted variant explicitly in the protocol and report."
+      ],
+      "scoringSteps": [
+        "For each participant and task condition, add the six dimension ratings and divide by 6: Raw TLX mean = Σ(six ratings) ÷ 6. This produces a 0–100 score.",
+        "Performance is anchored Good at the low end and Poor at the high end. A higher Performance rating means worse perceived performance; do not reverse-code it again.",
+        "Report the mean and all six dimension ratings, rating timing and task segment. If using a six-rating sum instead, label it explicitly as a 0–600 sum; do not compare its numeric level directly with 0–100 means or weighted TLX.",
+        "Do not label this result as the original weighted NASA-TLX or imply that published evidence for one scoring variant automatically validates the other."
+      ],
+      "dimensionGuide": [
+        {"name":"Mental Demand","meaning":"Amount of thinking, deciding, remembering, looking and other mental or perceptual activity required.","anchors":"Low → High"},
+        {"name":"Physical Demand","meaning":"Amount of physical activity required.","anchors":"Low → High"},
+        {"name":"Temporal Demand","meaning":"Time pressure imposed by the pace of the task or its events.","anchors":"Low → High"},
+        {"name":"Performance","meaning":"The participant's perceived success at meeting the task goals.","anchors":"Good (0) → Poor (100)"},
+        {"name":"Effort","meaning":"Mental and physical work required to achieve that performance.","anchors":"Low → High"},
+        {"name":"Frustration","meaning":"Feeling insecure, discouraged, irritated or stressed rather than content and relaxed.","anchors":"Low → High"}
+      ],
+      "procedureSource": {"label":"NASA-TLX Paper and Pencil Package, v1.0 (six dimensions)","url":"https://www.nasa.gov/wp-content/uploads/2026/03/nasa-tlx-v1-0-searchable-text-and-forms.pdf"},
+      "procedureVariantSource": {"label":"Hart (2006), Raw TLX discussion","url":"https://humansystems.arc.nasa.gov/groups/TLX/downloads/HFES_2006_Paper.pdf"},
+      "licensing": "NASA states that the TLX may be used or modified without seeking NASA permission. Name Raw TLX as an unweighted variant and disclose any further item or response-scale changes.",
       "reliabilityEvidence": [
         {
           "label": "Version-specific evidence needed",

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {dirname, resolve} from 'node:path';
-import {enrich, filterMeasures, rankMeasures, validateCatalog, validateEvidence} from '../app/measures.js';
+import {enrich, filterMeasures, rankMeasures, validateCatalog, validateConstructGroups, validateEvidence} from '../app/measures.js';
 const here=dirname(fileURLToPath(import.meta.url));
 const root=resolve(here,'../..');
 const c=JSON.parse(readFileSync(resolve(root,'domains/pvi-measurement/catalog/measures.json'),'utf8'));
@@ -15,6 +15,34 @@ test('catalog has unique measures and all construct/source relationships resolve
   assert.ok(c.constructs.length>=34);
   assert.ok(c.sources.length>=30);
   assert.equal(new Set(c.measures.map(m=>m.id)).size,c.measures.length);
+});
+test('construct-first navigation includes each catalog construct exactly once',()=>{
+  assert.deepEqual(validateConstructGroups(c.constructs),[]);
+  assert.ok(validateConstructGroups([...c.constructs,{id:'new-construct'}]).includes('Ungrouped construct: new-construct'));
+});
+test('weighted and Raw TLX profiles contain complete, distinct procedures',()=>{
+  const weighted=evidence.measureProfiles['nasa-task-load-index-weighted'];
+  const raw=evidence.measureProfiles['raw-nasa-tlx'];
+  const expected=['Mental Demand','Physical Demand','Temporal Demand','Performance','Effort','Frustration'];
+  for(const profile of [weighted,raw]){
+    assert.ok(profile.administrationSteps.length>=4);
+    assert.ok(profile.scoringSteps.length>=3);
+    assert.deepEqual(profile.dimensionGuide.map(d=>d.name),expected);
+    assert.ok(profile.dimensionGuide.every(d=>d.meaning&&d.anchors));
+    assert.ok(profile.procedureSource.url.startsWith('https://www.nasa.gov/'));
+  }
+  assert.equal(weighted.pairwiseComparisons,true);
+  assert.equal(raw.pairwiseComparisons,undefined);
+  assert.match(weighted.scoringSteps.join(' '),/sum to 15/);
+  assert.match(raw.scoringSteps.join(' '),/divide by 6/);
+  assert.match(weighted.dimensionGuide[3].anchors,/Good \(0\).*Poor \(100\)/);
+});
+test('controlled MIL-STD-1787D is identified without invented clause mappings',()=>{
+  const standard=evidence.standards.find(s=>s.id==='mil-std-1787d');
+  assert.equal(standard.shortTitle,'MIL-STD-1787D');
+  assert.match(standard.status,/controlled text/);
+  assert.match(standard.authorityNote,/no clause-level measure mapping/);
+  assert.equal(evidence.standardMappings.filter(m=>m.standardId===standard.id).length,0);
 });
 test('study, profile and standards evidence resolves to catalog records',()=>{
   assert.equal(validateEvidence(c,evidence).length,0);
