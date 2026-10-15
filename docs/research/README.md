@@ -5,3 +5,4 @@ Public-source human engineering research notes. Each note records source identit
 - [Aviation measures and standards crosswalk](./aviation-measures-and-standards-crosswalk.md) — current official aviation standards/guidance, clause-level candidate evidence, and access boundaries.
 - [Psychometrics and core measure evidence](./psychometrics-and-core-measure-evidence.md) — reliability, validity, factors/items, and source-separated dossiers for priority instruments.
 - [Scenario-to-verification flagship pathways](./scenario-to-verification-flagship-pathways.md) — four worked aviation pathways plus a verification-case schema linking task analysis, evidence roles, conditions, artifacts, and authority disposition.
+- [Measure study-search inventory](./measure-study-search-inventory.md) — deterministic all-measure handoff for external literature searching, with a CSV inventory and row-level study-use results template.
