@@ -8588,7 +8588,7 @@
       "family": "stick",
       "definition": "Magnitude or speed of pilot control movements",
       "operationalization": "RMS stick rate, normalized displacement or published task-specific formulation",
-      "units": "normalized/s",
+      "units": "source-defined (e.g., mm/s or percent full scale)",
       "timing": "continuous",
       "modality": [
         "HOTAS",

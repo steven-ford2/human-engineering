@@ -57,6 +57,18 @@ test('study, profile and standards evidence resolves to catalog records',()=>{
   assert.ok(mapped.has('nasa-task-load-index-weighted'));
   assert.ok(mapped.has('anthropometric-accommodation-rate'));
 });
+test('stick-control study evidence preserves source-specific signals and duty-cycle definitions',()=>{
+  const byId=new Map(evidence.studies.map(study=>[study.id,study]));
+  for(const id of ['hebbar-pashilkar-2016-handling','hanson-2014-adaptive-controls','niewind-2012-piw-74','niewind-2012-pilot-gain-69','carter-stoliker-2000-ministick']){
+    assert.ok(byId.has(id),id);
+    assert.ok(byId.get(id).url.startsWith('https://'),id);
+    assert.ok(byId.get(id).locator.length>20,id);
+  }
+  assert.match(byId.get('hebbar-pashilkar-2016-handling').use,/percent time/);
+  assert.match(byId.get('hanson-2014-adaptive-controls').use,/reversals per second/);
+  assert.deepEqual(byId.get('carter-stoliker-2000-ministick').measureIds,['stick-spectral-power']);
+  assert.equal(byId.has('mayer-cox-2003-sidestick'),false);
+});
 test('verification pathways resolve complete, complementary evidence stacks',()=>{
   const expected=new Set(['display-alert-legibility','hud-hmd-integration','workload-mode-handling','pilot-accommodation']);
   assert.deepEqual(new Set(evidence.verificationPathways.map(x=>x.id)),expected);
