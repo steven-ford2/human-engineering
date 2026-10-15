@@ -21,6 +21,7 @@ Branch: `codex/stick-inceptor-study-evidence` from `origin/main` at `db07baa` (b
 - `node --test platform/tests/test_measurement.mjs`: passed 14/14 after the new targeted test.
 - Manual catalog integrity check: 38 total study records, unique IDs, no broken measure IDs; 34 numbered intake titles.
 - Confirmed the built `platform/dist/measurement-data/measurement-evidence.json` contains the Hanson record. A rendered-browser spot check was not completed because the Playwright prerequisite `npx` is unavailable in this workspace; do not call it a visual pass.
+- The first PR CI run failed only at its hard-coded public-artifact assertion of exactly 33 studies after the catalog grew to 38. Updated the workflow to require at least 38 studies; the matching built-artifact assertion passed locally. Await the next GitHub validation run before considering CI green.
 
 ## Remaining and next action
 

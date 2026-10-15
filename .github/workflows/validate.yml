@@ -40,7 +40,7 @@ jobs:
           assert len(catalog['measures'])==279
           assert len(catalog['constructs'])==34
           assert len(designs['designs'])==25
-          assert len(evidence['studies'])==33
+          assert len(evidence['studies'])>=38
           assert len(evidence['standards'])==10
           assert any(s['id']=='mil-std-1787d' for s in evidence['standards'])
           assert len(evidence['standardMappings'])==17
