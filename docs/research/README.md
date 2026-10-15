@@ -6,3 +6,5 @@ Public-source human engineering research notes. Each note records source identit
 - [Psychometrics and core measure evidence](./psychometrics-and-core-measure-evidence.md) — reliability, validity, factors/items, and source-separated dossiers for priority instruments.
 - [Scenario-to-verification flagship pathways](./scenario-to-verification-flagship-pathways.md) — four worked aviation pathways plus a verification-case schema linking task analysis, evidence roles, conditions, artifacts, and authority disposition.
 - [Measure study-search inventory](./measure-study-search-inventory.md) — deterministic all-measure handoff for external literature searching, with a CSV inventory and row-level study-use results template.
+- [Stick/inceptor paper intake](./stick-inceptor-paper-intake.md) — all 34 user-supplied paper leads, with checked signal distinctions and catalog decisions.
+- [Stick/inceptor primary-source audit](./stick-inceptor-primary-source-audit.md) — detailed original-source checks, page locators, and access limits for the first curation pass.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "updatedOn": "2026-10-14",
+  "updatedOn": "2026-10-15",
   "status": "Curated primary-source evidence with explicit access and transfer limits. Absence from this file means not yet appraised, not that no evidence exists.",
   "applications": [
     {
@@ -1285,6 +1285,120 @@
         "hud-boresight-error",
         "display-chromaticity-error",
         "area-of-interest-dwell-time"
+      ]
+    },
+    {
+      "id": "hebbar-pashilkar-2016-handling",
+      "title": "Application of Quantitative Measures for Analysing Aircraft Handling Qualities",
+      "authors": "Hebbar and Pashilkar",
+      "year": 2016,
+      "citation": "Hebbar & Pashilkar (2016), Defence Science Journal 66(1), 3–10",
+      "url": "https://doi.org/10.14429/dsj.66.9196",
+      "locator": "pp. 3–8, §§2.1–3, Table 1 and Figs. 2–3",
+      "evidenceType": "application",
+      "use": "Three pilots completed 19 pitch/roll tracking segments across six sorties in two configurations of an unnamed high-performance fighter; simulator segments were also analyzed. Pilot inceptor workload was plotted in two dimensions: RMS stick-position rate in mm/s (aggressiveness) against percent time with stick change beyond a 0.5%-of-range threshold (duty cycle). The authors also examined stick-input power spectral density and tracking performance.",
+      "context": "Moving-HUD-target tracking in flight, with supplementary pitch and roll tracking simulator segments; aircraft type was not disclosed in the paper.",
+      "appraisal": "A concrete flight application of control-activity metrics, not a validation of universal mental workload. Pitch and roll target ranges differed greatly, so axis/task comparisons are confounded. Preserve the 0.5%-of-range activity rule, sampling, and task context before reuse; larger movement alone does not prove greater cognitive workload.",
+      "applications": [
+        "aircraft-handling",
+        "pilot-workload",
+        "simulator"
+      ],
+      "measureIds": [
+        "pilot-inceptor-workload-piw",
+        "stick-aggressiveness",
+        "stick-duty-cycle",
+        "stick-velocity-rms",
+        "stick-spectral-power"
+      ]
+    },
+    {
+      "id": "hanson-2014-adaptive-controls",
+      "title": "Complexity and Pilot Workload Metrics for the Evaluation of Adaptive Flight Controls on a Full Scale Piloted Aircraft",
+      "authors": "Hanson et al.",
+      "year": 2014,
+      "citation": "Hanson et al. (2014), NASA/TM-2014-216640",
+      "url": "https://ntrs.nasa.gov/citations/20140005730",
+      "locator": "pp. 11–12, §Aggressiveness and Duty Cycle Metrics, Eq. (2), Figs. 4–5",
+      "evidenceType": "application",
+      "use": "Two pilots flew 2-g air-to-air tracking tasks in NASA's F-18 testbed under nonadaptive and adaptive control configurations with a simulated reduced-pitch-damping failure. Aggressiveness averaged absolute pitch/roll input after low-frequency bias removal, normalized by each axis's allowable deflection. Their 'duty cycle' counted thresholded control-input reversals per second across axes (0.5% of range), rather than percentage of time moving.",
+      "context": "Full-scale piloted F-18 flight evaluation of adaptive-control behavior under a simulated failure; F-15 work in the report was a controller-complexity comparator, not this workload dataset.",
+      "appraisal": "Useful for distinguishing controller conditions and pilot-specific compensation in this task, not a standalone validated mental-workload score. The reversals-per-second definition is incompatible with percent-active duty cycle without explicit conversion/reanalysis; the authors found an earlier nonsteady-compensation measure insufficiently discriminating when inputs were nearly continuous.",
+      "applications": [
+        "aircraft-handling",
+        "pilot-workload"
+      ],
+      "measureIds": [
+        "stick-aggressiveness",
+        "stick-duty-cycle",
+        "stick-reversal-rate"
+      ]
+    },
+    {
+      "id": "niewind-2012-piw-74",
+      "title": "Pilot Gain and the Workload Buildup Flight Test Technique: A Closer Investigation of Pilot Inceptor Workload",
+      "authors": "Niewind",
+      "year": 2012,
+      "citation": "Niewind (2012), DLR-IB 111-2012/74",
+      "url": "https://elib.dlr.de/88208/",
+      "locator": "pp. I, 3–4, 16–20, 35–43; Table 3-7 and Chapters 4–6",
+      "evidenceType": "method comparison",
+      "use": "Analyzed fixed-base simulator tracking by 24 military pilots instructed to vary pilot gain. Baseline PIW plotted RMS stick speed against percentage of time the stick moved. The report compared alternative formulations using RMS deflection, speed×deflection, and acceleration, plus a proposed one-dimensional reduction; it also compared with previously published BAT DART NF-16D flight information.",
+      "context": "Sum-of-sines and boundary-avoidance simulator tasks, plus comparison to an external flight dataset; the report did not conduct the NF-16D flights.",
+      "appraisal": "Supports task-specific pilot-gain discrimination, not universal cognitive-workload validity. Alternative deflection/acceleration formulations are not interchangeable with baseline PIW. Simulator-versus-flight task and data-window differences and pilot strategy variation limit transfer; the same DLR simulator dataset appears in a related 2012 report and should not be counted twice.",
+      "applications": [
+        "pilot-workload",
+        "aircraft-handling",
+        "simulator"
+      ],
+      "measureIds": [
+        "pilot-inceptor-workload-piw",
+        "stick-aggressiveness",
+        "stick-duty-cycle",
+        "stick-input-rms",
+        "stick-velocity-rms"
+      ]
+    },
+    {
+      "id": "niewind-2012-pilot-gain-69",
+      "title": "Pilot Gain and the Workload Buildup Flight Test Technique: About the Influence of Natural Pilot Gain on the Achievable Pilot Gain Range",
+      "authors": "Niewind",
+      "year": 2012,
+      "citation": "Niewind (2012), DLR-IB 111-2012/69",
+      "url": "https://elib.dlr.de/88213/1/IB%20111-2012-69%20Niewind.pdf",
+      "locator": "Ch. 2 and Ch. 4, pp. 16–35; Summary/Outlook, pp. 38, 44–45",
+      "evidenceType": "method comparison",
+      "use": "Compared mean/RMS stick speed, high-speed percentages, acceleration variants, and stick-input spectral-power summaries as candidate pilot-gain metrics using simulator tracking data from 12 experimental test pilots and 12 operational pilots instructed to vary gain.",
+      "context": "Fixed-base pilot-gain tracking experiment; this report analyzes the same 24-pilot DLR data family as Niewind's companion 2012 PIW report, not a second independent sample or fighter flight trial.",
+      "appraisal": "Marked person-to-person scatter and weak regression fit prevented individual-pilot prediction from group natural-gain trends. Do not turn these control-activity distributions into person-independent workload cutoffs or count the companion report as replication.",
+      "applications": [
+        "aircraft-handling",
+        "pilot-workload",
+        "simulator"
+      ],
+      "measureIds": [
+        "stick-velocity-rms",
+        "stick-spectral-power"
+      ]
+    },
+    {
+      "id": "carter-stoliker-2000-ministick",
+      "title": "Flying Quality Analysis of a JAS 39 Gripen Ministick Controller in an F/A-18 Aircraft",
+      "authors": "Carter and Stoliker",
+      "year": 2000,
+      "citation": "Carter & Stoliker (2000), NASA/TM-2000-209024",
+      "url": "https://ntrs.nasa.gov/citations/20000080122",
+      "locator": "Printed pp. 13–14, Fig. 9 and Summary (PDF pp. 17–18)",
+      "evidenceType": "application",
+      "use": "Five pilots flew tracking and formation tasks in an F/A-18 with a small-displacement Gripen centerstick. The authors plotted power spectral density of pitch-stick activity during an echelon gross-acquisition/tracking task alongside Cooper–Harper ratings; one pilot's greater high-frequency activity was interpreted as higher closed-loop bandwidth.",
+      "context": "Six-flight handling-qualities experiment using an F/A-18 research control system; the key comparison was among pilots performing the same echelon phase-3 task.",
+      "appraisal": "This is evidence of spectral stick-input analysis in flight, not validation of spectral power as a standalone mental-workload scale. The paper relates the one pilot's activity to pilot technique, task bandwidth, and handling-quality rating; stick mechanics and control-law gearing limit transfer to other inceptors.",
+      "applications": [
+        "aircraft-handling",
+        "pilot-workload"
+      ],
+      "measureIds": [
+        "stick-spectral-power"
       ]
     }
   ],
