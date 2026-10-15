@@ -26,8 +26,37 @@ Canonical paths:
 - Deterministic regeneration by SHA-256 comparison — PASS for the CSV inventory, Markdown inventory, and results template.
 - `python tools/codex/check.py full` — PASS: 6 tooling tests, 7 Python platform tests, 28 JavaScript tests, 70-page Pages build with zero warnings, and 137 local Markdown links with zero breakage.
 
+## 2026-10-15: twenty focused usability passes
+
+Each pass asked what makes the next measurement decision clearer or removes a distraction. Changes are in the local Pages interface; the 20 entries describe distinct improvements, not 20 independent literature searches.
+
+1. Landing: route an unqualified visit to the construct-first measure finder.
+2. Global order: put Find a measure first in the main navigation.
+3. Domain order: put the finder and standards before reading/authoring links in the sidebar.
+4. Page framing: make the first screen ask for the outcome/construct, not catalog metadata.
+5. Quick entry: show eight high-utility construct choices without opening a filter panel.
+6. Complete coverage: group every catalog construct exactly once; test rejects omissions and duplicates.
+7. Long-list usability: provide search inside the full grouped construct list.
+8. State clarity: show the selected construct's definition and an immediate remove action.
+9. Local narrowing: search measure name, task, signal, or outcome within the selected construct.
+10. Progressive disclosure: keep application, standard, evidence, method, modality, and timing filters closed until needed.
+11. Filter reversibility: show applied filters as removable pills with clear-all.
+12. Shareability: preserve construct and sort choices in the URL.
+13. Scannability: show a manageable first page of 12 candidates with expansion.
+14. Candidate comparison: put family, collection timing, and collection method directly on cards.
+15. Evidence boundaries: distinguish appraised study use, curated guidance, standards relevance, and the unappraised queue.
+16. Navigation continuity: return from a profile to its filtered construct view.
+17. Profile focus: remove raw IDs and redundant availability/resource counts from the first view.
+18. Study review: place documented uses immediately after use/scoring, with application records first and a three-card initial view.
+19. Standard context: link mapped criteria back to their standard page, retaining caveats.
+20. Universal findability: include measures in global search and make keyboard Enter follow the selected measure/document result.
+
+Follow-up from the user: renamed saved candidates as a **test bed shortlist**, kept existing browser-local selections, removed the arbitrary four-measure cap and duplicate profile bar, and made the comparison page explicitly about measures saved for a test bed. The weighted and Raw NASA-TLX profiles now contain separately sourced, step-by-step administration/scoring procedures, six dimension definitions/anchors, Performance direction, and the weighted 15-pair checklist. See `docs/research/nasa-tlx-administration-and-scoring.md` for the NASA primary-source audit. MIL-STD-1787D is represented only by verified ASSIST metadata because its current full text is controlled; no clause mapping is invented.
+
+Current validation: `python tools/codex/check.py full` passed (6 tooling tests, 7 Python platform tests, 31 JavaScript tests, 70-page Pages build, zero build warnings, zero broken local links). Browser QA covered finder, weighted and Raw TLX profiles, test bed saving/comparison, global search keyboard navigation, MIL-STD-1787D access boundary, 390-pixel phone and 1440-pixel desktop layouts, and dark-theme contrast. No horizontal overflow at either tested width.
+
 ## Remaining and next action
-Give the inventory and template to the user for the external Scholar pass. Ingest returned rows with source-level validation, then implement the construct-first landing page and clause-level standards browsers.
+Give the inventory and template to the user for the external Scholar pass. Ingest returned rows with source-level validation. Expand the standard browser clause by clause only where public, authorized text is available; MIL-STD-1787D remains metadata-only until authorized text is provided. Do not present these interim source-backed mappings as a complete standard-by-standard treatment or a comprehensive study-use review.
 
 ## Sources and decisions
 - The canonical catalog is `domains/pvi-measurement/catalog/measures.json`; the inventory must reflect it exactly rather than introduce a second hand-maintained list.
